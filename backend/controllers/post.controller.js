@@ -1,5 +1,5 @@
 import Post from "../models/postSchema.js";
-import transport from "../services/mailService.js";
+/* import transport from "../services/mailService.js"; */
 import User from "../models/userSchema.js";
 
 
@@ -43,7 +43,7 @@ export const createPost = async (req, res) => {
         return res.status(400).send({ message: error.message });
     }
 
-    try {
+  /*   try {
         const user = await User.findById(newPost.user);
         await transport.sendMail({
             from: 'noreply@joker.com', // sender address
@@ -54,7 +54,7 @@ export const createPost = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-    }
+    } */
 }
 
 export const getSinglePost = async (req, res) => {
