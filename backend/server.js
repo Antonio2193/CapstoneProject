@@ -9,9 +9,12 @@ import passport from 'passport';
 import userRoute from './routes/userRoute.js';
 import postRoute from './routes/postRoute.js';
 import authenticationRouter from './routes/authenticationRoutes.js';
+import googleStrategy from './config/passport.config.js';
+import authorization from './middleware/authorization.js';
 
 const server = express();
 const port = process.env.PORT || 5000;
+passport.use('google', googleStrategy);
 
 
 await mongoose
