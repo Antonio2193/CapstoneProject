@@ -1,0 +1,32 @@
+@baseUrl=http://localhost:5000/api/v1/users
+
+GET {{baseUrl}}
+
+###
+GET {{baseUrl}}/66ebedab30241548d4386b84
+
+###
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{"name": "Pinco",
+ "surname": "Pallino",
+ "email": "qwer@qwer.com",
+ "avatar": ""
+}
+
+###
+
+PUT  {{baseUrl}}/
+Content-Type: application/json
+
+{"name": "Pinco",
+ "surname": "Pallone",
+ "email": "qwer@qwer.com",
+ "avatar": "https://picsum.photos/40"
+}
+
+###
+
+DELETE  {{baseUrl}}/66ebec9e30241548d4386b7e

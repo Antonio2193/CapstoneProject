@@ -1,0 +1,27 @@
+@baseUrl=http://localhost:5000/api/v1/auth
+
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+    "name": "Giovanni",
+    "surname": "Randis",
+    "email": "giovanni@randis.com",
+    "avatar": "qui c'è l'url",
+    "password": "qwerty"
+}
+
+###
+
+POST {{baseUrl}}/login
+Content-Type: application/json
+ 
+{
+      "email": "giovanni@randis.com",
+      "password":"qwerty"
+} 
+
+###
+
+GET {{baseUrl}}/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmVkNGE4NTcwNWJlZGM3Mzc0YzQxNTgiLCJpYXQiOjE3MjY4MjcxODcsImV4cCI6MTcyNjgzMDc4N30.rXMHCH5nWOobhtaphVGVtKzmegsGydjTtyhsWiTWH_M

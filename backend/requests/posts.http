@@ -1,0 +1,39 @@
+@baseUrl=http://localhost:5000/api/v1/blogPosts
+
+GET {{baseUrl}}
+
+###
+
+GET {{baseUrl}}/66ebfde1fe98a9cf51870624
+
+###
+
+POST {{baseUrl}}/
+Content-Type: application/json
+
+{
+   "category": "Manga",
+   "cover": "",
+   "author": "66ebec8430241548d4386b7c",
+   "content": "un bellissimo manga"
+}
+
+###
+
+PUT  {{baseUrl}}/66ebfde1fe98a9cf51870624
+Content-Type: application/json
+
+{"category": "Studio",
+ "cover": "",
+ "author": "66ebec8430241548d4386b7c",
+ "content": "un bellissimo maestro"
+}
+
+
+###
+
+DELETE  {{baseUrl}}/66ebfde1fe98a9cf51870624
+
+###
+
+GET http://localhost:5000/api/v1/blogPosts?category=anime

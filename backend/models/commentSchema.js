@@ -3,8 +3,8 @@ import { model, Schema } from "mongoose";
 const  commentSchema = new Schema ({
     content: {
         type: String,
-        minLenght: 2,
-        maxLenght: 300,
+        minLength: 2,
+        maxLength: 300,
         required: true,
         trim: true
     },

@@ -19,7 +19,10 @@ const postSchema = new Schema ({
     author : {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    } 
+    /* author : {
+        type: String
+    } */
 },
 {collection: 'posts'})
 

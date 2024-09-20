@@ -8,6 +8,7 @@ import passport from 'passport';
 
 import userRoute from './routes/userRoute.js';
 import postRoute from './routes/postRoute.js';
+import authenticationRouter from './routes/authenticationRoutes.js';
 
 const server = express();
 const port = process.env.PORT || 5000;
@@ -30,6 +31,7 @@ server.use(morgan('dev')) //middleware che mostra tutti i log delle richieste
 server.use(helmet()) //middleware che ci da la sicurezza per il BE
 server.use('/api/v1/users', /* authorization, */ userRoute)
 server.use('/api/v1/blogPosts', /* authorization, */ postRoute)
+server.use('/api/v1/auth', authenticationRouter)
 
 
 server.listen(port, () => {

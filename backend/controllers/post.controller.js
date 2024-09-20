@@ -14,7 +14,7 @@ export const getPosts = async (req, res) => {
             .sort({ title: 1, category: 1 })
             .skip((page - 1) * perPage)
             .limit(perPage)
-            .populate('user', 'name avatar') // Popola i campi 'name' e 'avatar' dell'utente
+            /* .populate('user', 'name avatar') */ // Popola i campi 'name' e 'avatar' dell'utente
             .exec();
 
         const totalResults = await Post.countDocuments(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {});
@@ -34,7 +34,7 @@ export const getPosts = async (req, res) => {
 
 
 export const createPost = async (req, res) => {
-    const post = new Post({...req.body, cover: req.file.path, readTime:JSON.parse(req.body.readTime)});
+    const post = new Post({...req.body, cover: req.file.path});
     let newPost 
     try {
         newPost = await post.save();
@@ -60,7 +60,7 @@ export const createPost = async (req, res) => {
 export const getSinglePost = async (req, res) => {
     const { id } = req.params;
     try {
-        const post = await Post.findById(id).populate('user');
+        const post = await Post.findById(id)/* .populate('user') */;
         res.status(200).send(post);
     } catch (error) {
         res.status(404).send({ message: "Post not found" });
