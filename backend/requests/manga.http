@@ -1,0 +1,46 @@
+@baseUrl=http://localhost:5000/api/v1/library/manga
+
+GET {{baseUrl}}
+
+###
+
+GET {{baseUrl}}/mangaId
+
+###
+
+POST {{baseUrl}}/
+Content-Type: application/json
+
+{
+   "title": "Naruto",
+   "cover": "",
+   "chapters": "700",
+   "volumes": "72",
+   "author": "Masashi Kishimoto",
+   "startDate": "1999-10-04",
+   "endDate": "2014-11-10"
+}
+
+###
+
+PUT  {{baseUrl}}/66f15de316e26c32e2d70bf8
+Content-Type: application/json
+
+{
+   "title": "Naruto",
+   "cover": "",
+   "chapters": "700",
+   "volumes": "72",
+   "author": "Masashi Kishimoto",
+   "startDate": "1999-10-04",
+   "endDate": "2014-11-10"
+}
+
+
+###
+
+DELETE  {{baseUrl}}/66f15de316e26c32e2d70bf8
+
+###
+
+GET http://localhost:5000/api/v1/blogPosts?category=anime

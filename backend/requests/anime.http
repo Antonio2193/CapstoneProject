@@ -1,0 +1,44 @@
+@baseUrl=http://localhost:5000/api/v1/library/anime
+
+GET {{baseUrl}}
+
+###
+
+GET {{baseUrl}}/animeId
+
+###
+
+POST {{baseUrl}}/
+Content-Type: application/json
+
+{
+   "title": "Naruto",
+   "cover": "",
+   "episodes": "500",
+   "producer":"Pierrot",
+   "startDate": "2007-02-15",
+   "endDate": "2017-03-23"
+}
+
+###
+
+PUT  {{baseUrl}}/66f165762d5bef7617324d46
+Content-Type: application/json
+
+{
+   "title": "Naruto Shippuden",
+   "cover": "",
+   "episodes": "500",
+   "producer": "Pier",
+   "startDate": "2007-02-15",
+   "endDate": "2017-03-23"
+}
+
+
+###
+
+DELETE  {{baseUrl}}/66f165762d5bef7617324d46
+
+###
+
+GET http://localhost:5000/api/v1/blogPosts?category=anime

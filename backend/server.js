@@ -9,6 +9,7 @@ import passport from 'passport';
 import userRoute from './routes/userRoute.js';
 import postRoute from './routes/postRoute.js';
 import authenticationRouter from './routes/authenticationRoutes.js';
+import libraryRoute from './routes/libraryRoute.js';
 import googleStrategy from './config/passport.config.js';
 import authorization from './middleware/authorization.js';
 
@@ -35,6 +36,7 @@ server.use(helmet()) //middleware che ci da la sicurezza per il BE
 server.use('/api/v1/users', /* authorization, */ userRoute)
 server.use('/api/v1/blogPosts', /* authorization, */ postRoute)
 server.use('/api/v1/auth', authenticationRouter)
+server.use('/api/v1/library', /*authorization, */ libraryRoute)
 
 
 server.listen(port, () => {
