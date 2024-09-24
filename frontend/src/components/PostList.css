@@ -1,0 +1,10 @@
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* per dare un po' di spazio sopra la paginazione */
+  }
+  
+  .pagination-controls span {
+    margin: 0 10px;
+  }
