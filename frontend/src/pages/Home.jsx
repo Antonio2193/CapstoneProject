@@ -1,10 +1,10 @@
 import { Button, Container, Modal, Form } from "react-bootstrap";
-/* import "./styles.css"; */
+import "./Home.css";
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../context/UserContextProvider";
 import { useSearchParams, Link } from "react-router-dom";
 import { login } from "../data/fetch";
-import PostList from "../components/PostList";
+import PostList from "../components/PostList/PostList";
 
 
 const Home = (props) => {
@@ -50,8 +50,9 @@ const Home = (props) => {
 
 
   return (
-    <Container fluid="sm">
+    <Container fluid="sm" className="home-container">
       <h1 className="blog-main-title mb-3">Benvenuto su OtakuWorld!</h1>
+      <p className="mb-3 blog-main-content">Il mondo di anime e manga che stavi cercando!</p>
       <>
         {!token&&<div><Button variant="primary" onClick={handleShow}>
           Login
