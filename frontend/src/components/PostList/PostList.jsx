@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
 import PostItem from "./PostItem";
-import { loadPosts } from "../data/fetch";
-import { UserContext } from "../context/UserContextProvider";
+import { loadPosts } from "../../data/fetch";
+import { UserContext } from "../../context/UserContextProvider";
 import "./PostList.css";
 
 const PostList = () => {

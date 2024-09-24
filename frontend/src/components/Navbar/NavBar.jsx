@@ -3,9 +3,9 @@ import { Button, Container, Navbar, Modal, Form, Image } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 /* import logo from "../../assets/logo.png"; */
  import "./NavBar.css";
-import { UserContext } from "../context/UserContextProvider";
+import { UserContext } from "../../context/UserContextProvider";
 import { useContext, useState } from "react";
-import { register } from "../data/fetch";
+import { register } from "../../data/fetch";
 
 const NavBar = props => {
   const { token , setToken} = useContext(UserContext)

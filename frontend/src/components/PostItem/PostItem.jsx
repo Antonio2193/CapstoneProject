@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Card, Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import PostUser from "./PostUser";
+import PostUser from "../PostUser/PostUser";
 import "./PostItem.css";
-import { UserContext } from "../context/UserContextProvider";
+import { UserContext } from "../../context/UserContextProvider";
 /* import { Editor } from 'react-draft-wysiwyg'; */
 import {jwtDecode} from "jwt-decode"; // Fix jwtDecode import
-import { deletePost } from "../data/fetch";
+import { deletePost } from "../../data/fetch";
 
 
 const PostItem = (props) => {
