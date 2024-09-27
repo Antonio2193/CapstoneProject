@@ -1,31 +1,68 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Card, Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PostUser from "../PostUser/PostUser";
 import "./PostItem.css";
 import { UserContext } from "../../context/UserContextProvider";
-/* import { Editor } from 'react-draft-wysiwyg'; */
-import {jwtDecode} from "jwt-decode"; // Fix jwtDecode import
-import { deletePost } from "../../data/fetch";
-
+import { jwtDecode } from "jwt-decode";
+import { deletePost, newComment, loadComments } from "../../data/fetch";
 
 const PostItem = (props) => {
-  const { title, cover, author, _id, category, content, setAggiornaPostList, aggiornaPostList } = props; // Include all necessary props
-  const { token, userInfo } = useContext(UserContext);
-  const [show, setShow] = useState(false);
-  const [formValue, setFormValue] = useState({
-    category: "",
-    content: "",
-    /* cover: "", */
+  const {
+    title,
+    cover,
+    author,
+    _id,
+    category,
+    content,
+    setAggiornaPostList,
+    aggiornaPostList,
+  } = props;
 
-  }); // Initialize formValue
-  
+  const { token, userInfo } = useContext(UserContext);
+  const decodedToken = jwtDecode(token);
+  const [comments, setComments] = useState([]);
+  const [show, setShow] = useState(false);
+  const initialFormValue = {
+    author: decodedToken.userId,
+    content: ""
+  };
+  const [formValue, setFormValue] = useState(initialFormValue);
+
+  const [newCommentText, setNewCommentText] = useState("");
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const commentsData = await loadComments(_id);
+        setComments(commentsData.dati);
+      } catch (error) {
+        console.error("Errore nel caricamento dei commenti:", error);
+      }
+    };
+    fetchComments();
+  }, [_id, aggiornaPostList]);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const decodedToken = jwtDecode(token);
 
-  // When clicking "Edit", populate formValue with the post's current values
+  const handleNewComment = async (event) => {
+    event.preventDefault();
+    try {
+        const newCommentResponse = await newComment(_id, {
+            content: newCommentText,
+        });
+        setNewCommentText("");
+        setAggiornaPostList((prev) => !prev);
+    } catch (error) {
+        console.error("Errore durante l'aggiunta del commento:", error);
+    }
+};
+
+
+  /* const decodedToken = jwtDecode(token); */
+
   const handleEditPost = () => {
     setFormValue({
       title: title,
@@ -44,40 +81,45 @@ const PostItem = (props) => {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/blogPosts/${_id}`, {
-        method: 'PUT', // or PATCH
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(formValue), // Send updated form data
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/v1/blogPosts/${_id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(formValue),
+        }
+      );
 
       if (response.ok) {
         const updatedPost = await response.json();
-        // Handle success, e.g., update the post list
-        console.log('Post updated successfully:', updatedPost);
-        handleClose(); // Close the modal after saving
+        console.log("Post updated successfully:", updatedPost);
+        handleClose();
         setAggiornaPostList(!aggiornaPostList);
       } else {
-        console.error('Error updating the post:', response.status);
+        console.error("Error updating the post:", response.status);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
-  const handleDelete = async () =>{
-    try {
-      await deletePost(_id)
-      alert('Post deleted!')
-      setAggiornaPostList(!aggiornaPostList)
-      // navigate ('/')
-    } catch (error) {
-      console.error("Errore durante l'eliminazione del post:", error);
-      alert ('Unable to delete the post')
+  const handleDelete = async () => {
+    if (window.confirm("Sei sicuro di voler eliminare questo post?")) {
+      try {
+        await deletePost(_id);
+        alert("Post eliminato!");
+        setAggiornaPostList(!aggiornaPostList);
+      } catch (error) {
+        console.error("Errore durante l'eliminazione del post:", error);
+        alert("Impossibile eliminare il post");
+      }
     }
-  }
+  };
+
+ 
 
   return (
     <Card className="blog-card">
@@ -85,73 +127,102 @@ const PostItem = (props) => {
         <Card.Img variant="top" src={cover} className="blog-cover" />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
+          <Card.Text>{content}</Card.Text>
         </Card.Body>
       </Link>
       <Card.Footer>
         <PostUser {...author} />
-        {userInfo._id === author._id && (
-          <Button variant="danger" className="ms-2" onClick={handleDelete}>
-            Delete
-          </Button>
-        )}
-        {userInfo._id === author._id && (
-          <Button variant="success" className="ms-2" onClick={handleEditPost}>
-            Edit
-          </Button>
-        )}
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Edit Post</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form className="mt-5">
-              {/* <Form.Group controlId="blog-form" className="mt-3">
-                <Form.Label>Title</Form.Label>
-                <Form.Control
-                  size="lg"
-                  placeholder="Title"
-                  name="title"
-                  value={formValue.title}
-                  onChange={handleChangeFormValue}
-                />
-              </Form.Group> */}
-              <Form.Group controlId="blog-category" className="mt-3">
-                <Form.Label>Category</Form.Label>
-                <Form.Control
-                  size="lg"
-                  as="select"
-                  name="category"
-                  value={formValue.category}
-                  onChange={handleChangeFormValue}
-                >
-                  <option>Anime</option>
-                  <option>Manga</option>
-                </Form.Control>
-              </Form.Group>
-              <Form.Group controlId="blog-content" className="mt-3">
-                <Form.Label>Content</Form.Label>
-                <Form.Control
-                  size="lg"
-                  placeholder="Content"
-                  name="content"
-                  value={formValue.content}
-                  onChange={handleChangeFormValue}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
+        {userInfo._id === author && (
+          <>
+            <Button variant="success" className="ms-2" onClick={handleEditPost}>
+              Edit
             </Button>
-            <Button variant="primary" onClick={handleSaveChanges}>
-              Save Changes
+            <Button variant="danger" onClick={handleDelete}>
+              Delete
             </Button>
-          </Modal.Footer>
-        </Modal>
+          </>
+        )}
       </Card.Footer>
+
+      {/* Mostra i commenti */}
+      <Card.Body>
+      
+        <h5>Commenti:</h5>
+        {comments.length > 0 ? (
+  comments.map((comment) => (
+    <div key={comment._id}>
+      <p>
+        {comment.content} - {comment.author ? comment.author.name : "Anonimo"} {/* Qui mostri il nome dell'autore */}
+      </p>
+    </div>
+  ))
+) : (
+  <p>Non ci sono commenti ancora.</p>
+)}
+      </Card.Body>
+
+      {/* Form per il nuovo commento */}
+      <Card.Body>
+        <Form onSubmit={handleNewComment}>
+          <Form.Group controlId="formNewComment">
+            <Form.Control
+              type="text"
+              placeholder="Scrivi un nuovo commento..."
+              value={newCommentText}
+              onChange={(e) => setNewCommentText(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Invia
+          </Button>
+        </Form>
+      </Card.Body>
+
+      {/* Modale per l'edit del post */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formCategory" className="mt-3">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                as="select"
+                name="category"
+                value={formValue.category}
+                onChange={handleChangeFormValue}
+              >
+                <option value="Anime">Anime</option>
+                <option value="Manga">Manga</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="formContent" className="mt-3">
+              <Form.Label>Content</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                name="content"
+                value={formValue.content}
+                onChange={handleChangeFormValue}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Card>
   );
+  
 };
+
 
 export default PostItem;

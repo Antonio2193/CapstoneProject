@@ -33,10 +33,10 @@ server.use(express.json()) // middleware che ci dice che tutti i body che inviam
 server.use(cors()) // per connettere BE al FE
 server.use(morgan('dev')) //middleware che mostra tutti i log delle richieste
 server.use(helmet()) //middleware che ci da la sicurezza per il BE
-server.use('/api/v1/users', /* authorization, */ userRoute)
-server.use('/api/v1/blogPosts', /* authorization, */ postRoute)
+server.use('/api/v1/users', authorization, userRoute)
+server.use('/api/v1/blogPosts', authorization, postRoute)
 server.use('/api/v1/auth', authenticationRouter)
-server.use('/api/v1/library', /*authorization, */ libraryRoute)
+server.use('/api/v1/library', authorization, libraryRoute)
 
 
 server.listen(port, () => {

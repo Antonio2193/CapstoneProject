@@ -68,25 +68,29 @@ export const loadPosts = async (search, page = 1, perPage = 9) => {
     });
   
     const data = await res.json();
+    
+    // Aggiungi questo log per vedere i dati completi che ritornano
+    console.log('Dati post con commenti:', data);  
+  
     return data;
   };
   
 
-export const loadComments = async (id) => {
+  export const loadComments = async (id) => {
     const res = await fetch(`http://localhost:5000/api/v1/blogPosts/${id}/comments`, {
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
-    })
+    });
     const data = await res.json();
-    return data
+    console.log("Dati commenti:", data); // Aggiungi questo per verificare
+    return data;
 }
 
 export const newPost = async (formValue, cover) => {
     const formData = new FormData()
     formData.append('cover', cover)
     formData.append('category', formValue.category)
-    formData.append('title', formValue.title)
     formData.append('readTime', JSON.stringify(formValue.readTime))
     formData.append('author', formValue.author)
     formData.append('content', formValue.content)
@@ -115,17 +119,22 @@ export const loadPost = async (paramsId) => {
 }
 
 export const newComment = async (id, formValue) => {
-
     const res = await fetch(`http://localhost:5000/api/v1/blogPosts/${id}/comments`, {
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`,
             "Content-Type": "application/json"
         },
         method: "POST",
-        body: JSON.stringify(formValue)
-    })
-    const data = await res.json()
-    return data
+        body: JSON.stringify(formValue) // Assicurati che formValue abbia i campi corretti
+    });
+    
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Errore durante la creazione del commento");
+    }
+
+    const data = await res.json();
+    return data;
 }
 
 export const updateComment = async (blogpostId, commentId, updatedCommentData) => {

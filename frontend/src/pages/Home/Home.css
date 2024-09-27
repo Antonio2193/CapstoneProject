@@ -39,11 +39,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('../backgroundImage/anime-crossover-ash-pokemon-asuna-yuuki-wallpaper-preview.jpg'); /* Immagine di sfondo */
+    background-image: url('../../backgroundImage/anime-crossover-ash-pokemon-asuna-yuuki-wallpaper-preview.jpg'); /* Immagine di sfondo */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(2px); /* Aggiunge la sfocatura */
+    filter: blur(1px); /* Aggiunge la sfocatura */
     z-index: -1; /* Mette lo sfondo dietro il contenuto */
   }
   

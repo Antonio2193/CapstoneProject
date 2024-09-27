@@ -13,14 +13,10 @@ const PostList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const handleSearch = (event) => {
-    setSearch(event.target.value ? event.target.value : "");
-  };
-
   useEffect(() => {
     loadPosts(search, currentPage).then((data) => {
       setPosts(data.dati);
-      setTotalPages(data.totalPages); // Imposta il numero totale di pagine
+      setTotalPages(data.totalPages);
     });
   }, [search, currentPage, aggiornaPostList]);
 
@@ -38,23 +34,11 @@ const PostList = () => {
 
   return (
     <>
-      {/* {token && (
-        <Form className="d-flex">
-          <Form.Control
-            type="search"
-            placeholder="Search post"
-            className="me-2 mb-2 w-25"
-            aria-label="Search"
-            name="search"
-            onChange={handleSearch}
-          />
-        </Form>
-      )} */}
       <Row>
         {posts.map((post, i) => (
           <Col
             key={`item-${i}`}
-            md={4}
+            md={10}
             style={{
               marginBottom: 50,
             }}
@@ -68,7 +52,6 @@ const PostList = () => {
           </Col>
         ))}
       </Row>
-      {/* Paginazione */}
       <div className="pagination-controls">
         <Button onClick={goToPreviousPage} disabled={currentPage === 1}>
           Previous

@@ -1,29 +1,29 @@
 import { model, Schema } from "mongoose";
 
-const postSchema = new Schema ({
+const postSchema = new Schema({
     category: {
         type: String,
         required: true
     },
-   /*  title: {
-        type: String,
-        required: true
-    }, */
     cover: {
         type: String,
     },
-    content : {
+    content: {
         type: String,
         required: true
     },
-    author : {
+    author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    } 
-    /* author : {
-        type: String
-    } */
+    },
+    comments: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
+    }]
 },
-{collection: 'posts'})
+{ 
+    collection: 'posts',
+    timestamps: true  // Aggiunto per tracciare createdAt e updatedAt
+});
 
-export default model('Post', postSchema)
+export default model('Post', postSchema);

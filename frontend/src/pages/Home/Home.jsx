@@ -1,10 +1,10 @@
 import { Button, Container, Modal, Form } from "react-bootstrap";
 import "./Home.css";
 import { useContext, useState, useEffect } from "react";
-import { UserContext } from "../context/UserContextProvider";
+import { UserContext } from "../../context/UserContextProvider";
 import { useSearchParams, Link } from "react-router-dom";
-import { login } from "../data/fetch";
-import PostList from "../components/PostList/PostList";
+import { login } from "../../data/fetch";
+import PostList from "../../components/PostList/PostList";
 
 
 const Home = (props) => {

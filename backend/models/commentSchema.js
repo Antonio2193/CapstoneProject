@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-const  commentSchema = new Schema ({
+const commentSchema = new Schema({
     content: {
         type: String,
         minLength: 2,
@@ -11,14 +11,15 @@ const  commentSchema = new Schema ({
     post: {
         type: Schema.Types.ObjectId,
         ref: 'Post',
+        required: true
     },
-    author : {
+    author: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
-    }
-},
-{collection: 'comments',
+        ref: 'User' // Verifica che il nome del modello User sia esattamente "User"
+    },
+}, {
+    collection: 'comments',
     timestamps: true
-})
+});
 
-export default model('Comment', commentSchema)
+export default model('Comment', commentSchema);

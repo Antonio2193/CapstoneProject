@@ -11,7 +11,6 @@ const NavBar = props => {
   const { token , setToken} = useContext(UserContext)
   const { userInfo , setUserInfo} = useContext(UserContext)
   const navigate = useNavigate()
-  console.log(userInfo)
   const [showReg, setShowReg] = useState(false);
   const handleCloseReg = () => setShowReg(false);
   const handleShowReg = () => setShowReg(true)

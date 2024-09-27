@@ -1,24 +1,42 @@
 import user from "../models/userSchema.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import transport from "../services/mailService.js";
 
 
 export const register = async (req, res) => {
-    //verificare che la mail non sia già registrata
-    const utente = await user.findOne({ email: req.body.email });
-    if (utente) return res.status(500).send("Email already exists");
-    //se non è usata allora crea un nuovo utente
-    const newUser = new user({
-        name: req.body.name,
-        surname: req.body.surname,
-        email: req.body.email,
-        password: await bcrypt.hash(req.body.password, 10),
-        avatar: req.file ? req.file.path : "https://picsum.photos/40/",
-        verifiedAt: new Date()
-    });
+    try {
+        // Verifica che la mail non sia già registrata
+        const utente = await user.findOne({ email: req.body.email });
+        if (utente) return res.status(500).send("Email already exists");
 
-    const userCreated = await newUser.save()
-    res.send(userCreated);
+        // Crea un nuovo utente
+        const newUser = new user({
+            name: req.body.name,
+            surname: req.body.surname,
+            email: req.body.email,
+            password: await bcrypt.hash(req.body.password, 10),
+            avatar: req.file ? req.file.path : "https://picsum.photos/40/",
+            verifiedAt: new Date(),
+        });
+
+        const userCreated = await newUser.save();
+
+        // Invia email di benvenuto
+        await transport.sendMail({
+            from: 'noreply@yourdomain.com', // indirizzo del mittente
+            to: newUser.email, // indirizzo email del destinatario
+            subject: "Benvenuto! Registrazione completata", // Oggetto della mail
+            text: `Ciao ${newUser.name}, grazie per esserti registrato!`, // Corpo della mail in testo semplice
+            html: `<b>Ciao ${newUser.name},</b><br>Grazie per esserti registrato su <i>OtakuWorld</i>!`, // Corpo della mail in HTML
+        });
+
+        // Risposta con l'utente creato
+        res.status(201).send(userCreated);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Si è verificato un errore durante la registrazione.");
+    }
 
 }
 

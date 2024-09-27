@@ -1,5 +1,4 @@
 import Post from "../models/postSchema.js";
-/* import transport from "../services/mailService.js"; */
 import User from "../models/userSchema.js";
 
 
@@ -9,17 +8,26 @@ export const getPosts = async (req, res) => {
     perPage = perPage > 10 ? 9 : perPage;
 
     try {
-        const posts = await Post.find(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {})
-            .collation({ locale: 'it' }) // Ignora maiuscole e minuscole nell'ordinamento
+        // Filtro opzionale per il titolo
+        const filter = req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {};
+
+        // Trova i post, ordina per titolo e categoria, applica paginazione
+        const posts = await Post.find(filter)
+            .collation({ locale: 'it' }) // Ignora maiuscole e minuscole
             .sort({ title: 1, category: 1 })
             .skip((page - 1) * perPage)
             .limit(perPage)
-            /* .populate('user', 'name avatar') */ // Popola i campi 'name' e 'avatar' dell'utente
+            .populate({
+                path: 'comments', // Popola i commenti collegati
+                populate: { path: 'author', select: 'name' } // Popola anche il campo 'author' dei commenti con solo il nome
+            })
             .exec();
 
-        const totalResults = await Post.countDocuments(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {});
+        // Conta il totale dei post
+        const totalResults = await Post.countDocuments(filter);
         const totalPages = Math.ceil(totalResults / perPage);
 
+        // Risposta con i dati dei post, numero di pagine, ecc.
         res.send({
             dati: posts,
             page,
@@ -33,6 +41,7 @@ export const getPosts = async (req, res) => {
 };
 
 
+
 export const createPost = async (req, res) => {
     const post = new Post({...req.body, cover: req.file.path});
     let newPost 
@@ -42,19 +51,6 @@ export const createPost = async (req, res) => {
     } catch (error) {
         return res.status(400).send({ message: error.message });
     }
-
-  /*   try {
-        const user = await User.findById(newPost.user);
-        await transport.sendMail({
-            from: 'noreply@joker.com', // sender address
-            to: user.email, // list of receivers
-            subject: "New Post", // Subject line
-            text: "You have created a new post", // plain text body
-            html: "<b>You have created a new post</b>", // html body
-        })
-    } catch (error) {
-        console.log(error)
-    } */
 }
 
 export const getSinglePost = async (req, res) => {
