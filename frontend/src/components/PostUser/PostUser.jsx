@@ -1,9 +1,10 @@
 import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import "./PostUser.css";
+import UserContextProvider from "../../context/UserContextProvider";
 
 const PostUser = props => {
-  const { name, avatar } = props;
+  const { name, avatar } = props; // Assicurati di destrutturare le props correttamente
   return (
     <Row>
       <Col xs={"auto"} className="pe-0">

@@ -5,7 +5,13 @@ import PostUser from "../PostUser/PostUser";
 import "./PostItem.css";
 import { UserContext } from "../../context/UserContextProvider";
 import { jwtDecode } from "jwt-decode";
-import { deletePost, newComment, loadComments } from "../../data/fetch";
+import {
+  deletePost,
+  newComment,
+  loadComments,
+  likePost,
+} from "../../data/fetch"; // Aggiungi likePost
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const PostItem = (props) => {
   const {
@@ -17,6 +23,9 @@ const PostItem = (props) => {
     content,
     setAggiornaPostList,
     aggiornaPostList,
+    likes,
+    onLike,
+    liked, // Nuovo props per sapere se il post è stato messo like
   } = props;
 
   const { token, userInfo } = useContext(UserContext);
@@ -25,11 +34,12 @@ const PostItem = (props) => {
   const [show, setShow] = useState(false);
   const initialFormValue = {
     author: decodedToken.userId,
-    content: ""
+    content: "",
   };
   const [formValue, setFormValue] = useState(initialFormValue);
-
   const [newCommentText, setNewCommentText] = useState("");
+  const [authorDetails, setAuthorDetails] = useState({}); // Stato per i dettagli dell'autore
+  const [showAllComments, setShowAllComments] = useState(false); // Stato per mostrare tutti i commenti
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -43,25 +53,52 @@ const PostItem = (props) => {
     fetchComments();
   }, [_id, aggiornaPostList]);
 
+  // Effetto per caricare i dettagli dell'autore
+  useEffect(() => {
+    const fetchAuthorDetails = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/v1/users/${author}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Aggiungi l'intestazione di autorizzazione
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setAuthorDetails(data);
+        } else {
+          console.error(
+            "Errore nel caricamento dei dettagli dell'autore:",
+            response.status
+          );
+        }
+      } catch (error) {
+        console.error("Errore:", error);
+      }
+    };
+
+    fetchAuthorDetails();
+  }, [author, token]); // Aggiungi token alle dipendenze
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
 
   const handleNewComment = async (event) => {
     event.preventDefault();
     try {
-        const newCommentResponse = await newComment(_id, {
-            content: newCommentText,
-        });
-        setNewCommentText("");
-        setAggiornaPostList((prev) => !prev);
+      const newCommentResponse = await newComment(_id, {
+        content: newCommentText,
+      });
+      setNewCommentText("");
+      setAggiornaPostList((prev) => !prev);
+      alert("Commento aggiunto con successo!"); // Notifica di successo
     } catch (error) {
-        console.error("Errore durante l'aggiunta del commento:", error);
+      console.error("Errore durante l'aggiunta del commento:", error);
+      alert("Errore durante l'aggiunta del commento."); // Notifica di errore
     }
-};
-
-
-  /* const decodedToken = jwtDecode(token); */
+  };
 
   const handleEditPost = () => {
     setFormValue({
@@ -95,14 +132,17 @@ const PostItem = (props) => {
 
       if (response.ok) {
         const updatedPost = await response.json();
-        console.log("Post updated successfully:", updatedPost);
+        console.log("Post aggiornato con successo:", updatedPost);
         handleClose();
         setAggiornaPostList(!aggiornaPostList);
       } else {
-        console.error("Error updating the post:", response.status);
+        console.error(
+          "Errore durante l'aggiornamento del post:",
+          response.status
+        );
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Errore:", error);
     }
   };
 
@@ -119,11 +159,19 @@ const PostItem = (props) => {
     }
   };
 
- 
+  const handleLikePost = async () => {
+    try {
+      // Invia richiesta di "like" al backend
+      await likePost(_id);
+      setAggiornaPostList((prev) => !prev); // Ricarica i post per aggiornare i like
+    } catch (error) {
+      console.error("Errore durante l'aggiunta del like:", error);
+    }
+  };
 
   return (
     <Card className="blog-card">
-      <Link to={`/blog/${_id}`} className="blog-link">
+      <Link to={`/post/${_id}`} className="blog-link">
         <Card.Img variant="top" src={cover} className="blog-cover" />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
@@ -131,34 +179,59 @@ const PostItem = (props) => {
         </Card.Body>
       </Link>
       <Card.Footer>
-        <PostUser {...author} />
-        {userInfo._id === author && (
-          <>
-            <Button variant="success" className="ms-2" onClick={handleEditPost}>
-              Edit
+    <PostUser name={authorDetails.name} avatar={authorDetails.avatar} />
+    {userInfo._id === author && (
+        <>
+            <Button variant="primary" className="ms-2" onClick={handleEditPost}>
+                <i className="fas fa-edit"></i> {/* Icona di modifica */}
             </Button>
-            <Button variant="danger" onClick={handleDelete}>
-              Delete
+            <Button variant="warning" onClick={handleDelete}>
+                <i className="fas fa-trash"></i> {/* Icona di eliminazione */}
             </Button>
-          </>
-        )}
-      </Card.Footer>
+        </>
+    )}
+    <div className="d-flex align-items-center mt-2">
+        <button
+            onClick={handleLikePost}
+            className={`btn btn-outline-primary me-2 ${
+                liked ? "text-primary" : ""
+            }`}
+            disabled={liked}
+        >
+            <i className={`fas fa-thumbs-up`}></i> Like
+        </button>
+        <span>{likes.count || 0} likes</span>
+    </div>
+</Card.Footer>
 
       {/* Mostra i commenti */}
       <Card.Body>
-      
         <h5>Commenti:</h5>
         {comments.length > 0 ? (
-  comments.map((comment) => (
-    <div key={comment._id}>
-      <p>
-        {comment.content} - {comment.author ? comment.author.name : "Anonimo"} {/* Qui mostri il nome dell'autore */}
-      </p>
-    </div>
-  ))
-) : (
-  <p>Non ci sono commenti ancora.</p>
+          <>
+            {comments
+              .slice(0, showAllComments ? comments.length : 3)
+              .map((comment) => (
+                <div key={comment._id}>
+                  <p>
+                    {comment.content} -{" "}
+                    {comment.author ? comment.author.name : "Anonimo"}
+                  </p>
+                </div>
+              ))}
+           {comments.length > 3 && (
+    <button
+        onClick={() => setShowAllComments(!showAllComments)}
+        className="btn btn-link"
+    >
+        <i className={`fas fa-chevron-${showAllComments ? "up" : "down"}`}></i>
+        {showAllComments ? " Nascondi commenti" : " Mostra tutti i commenti"}
+    </button>
 )}
+          </>
+        ) : (
+          <p>Non ci sono commenti ancora.</p>
+        )}
       </Card.Body>
 
       {/* Form per il nuovo commento */}
@@ -187,7 +260,7 @@ const PostItem = (props) => {
         <Modal.Body>
           <Form>
             <Form.Group controlId="formCategory" className="mt-3">
-              <Form.Label>Category</Form.Label>
+              <Form.Label>Categoria</Form.Label>
               <Form.Control
                 as="select"
                 name="category"
@@ -199,7 +272,7 @@ const PostItem = (props) => {
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="formContent" className="mt-3">
-              <Form.Label>Content</Form.Label>
+              <Form.Label>Contenuto</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
@@ -212,17 +285,15 @@ const PostItem = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Chiudi
           </Button>
           <Button variant="primary" onClick={handleSaveChanges}>
-            Save Changes
+            Salva Cambiamenti
           </Button>
         </Modal.Footer>
       </Modal>
     </Card>
   );
-  
 };
-
 
 export default PostItem;

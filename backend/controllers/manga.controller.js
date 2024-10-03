@@ -1,26 +1,18 @@
 import Manga from "../models/mangaSchema.js";
+import {v2 as cloudinary} from 'cloudinary';
 
-export const getManga = async(req,res) => {
-    const page = req.query.page || 1;
-    let perPage = req.query.perPage || 8;
-    perPage = perPage > 10 ? 9 : perPage;
-
+export const getManga = async (req, res) => {
     try {
-        const manga = await Manga.find(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {})
-        .collation({ locale: 'it' }) // Ignora maiuscole e minuscole nell'ordinamento
-        .sort({ title: 1, author: 1 })
-        .skip((page - 1) * perPage)
-        .limit(perPage)
-        .exec();
-
-        const totalResults = await Manga.countDocuments(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {});
-        const totalPages = Math.ceil(totalResults / perPage);
+        const query = req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {};
+        
+        const manga = await Manga.find(query)
+            .collation({ locale: 'it' }) // Ignora maiuscole e minuscole nell'ordinamento
+            .sort({ title: 1, author: 1 }) // Ordina per titolo e autore
+            .exec();
 
         res.send({
             dati: manga,
-            page,
-            totalPages,
-            totalResults,
+            totalResults: manga.length, // Totale risultati
         });
     } catch (error) {
         console.error('Error fetching manga:', error);
@@ -38,16 +30,31 @@ export const getSingleManga = async(req,res) => {
     }
 }
 
-export const createManga = async (req,res) => {
-    const manga = new Manga({...req.body, cover: req.file.path});
-    let newManga;
+export const createManga = async (req, res) => {
     try {
-        newManga = await manga.save();
-        res.send(newManga);
+        console.log("req.body:", req.body); // Verifica i dati nel body
+        console.log("req.file:", req.file); // Verifica il file caricato
+
+        let coverPath;
+
+        // Verifica se viene fornito un URL per l'immagine o se c'è un file caricato
+        if (req.body.cover) {
+            coverPath = req.body.cover;
+        } else if (req.file) {
+            coverPath = req.file.path;
+        } else {
+            coverPath = 'https://via.placeholder.com/150'; // Immagine di fallback
+        }
+
+        const manga = new Manga({ ...req.body, cover: coverPath });
+        const newManga = await manga.save();
+
+        res.status(201).send(newManga);
     } catch (error) {
-        res.status(400).send({ message: error.message });
+        console.error("Errore nella creazione del manga:", error);
+        res.status(400).send({ message: "Errore nella creazione del manga" });
     }
-}
+};
 
 export const editManga = async(req,res) => {
     const { id } = req.params;

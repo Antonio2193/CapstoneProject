@@ -1,26 +1,18 @@
 import Anime from "../models/animeSchema.js";
+import { v2 as cloudinary } from 'cloudinary'; 
 
-export const getAnime = async(req,res) => {
-    const page = req.query.page || 1;
-    let perPage = req.query.perPage || 8;
-    perPage = perPage > 10 ? 9 : perPage;
-
+export const getAnime = async (req, res) => {
     try {
-        const anime = await Anime.find(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {})
-        .collation({ locale: 'it' }) // Ignora maiuscole e minuscole nell'ordinamento
-        .sort({ title: 1, author: 1 })
-        .skip((page - 1) * perPage)
-        .limit(perPage)
-        .exec();
-
-        const totalResults = await Anime.countDocuments(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {});
-        const totalPages = Math.ceil(totalResults / perPage);
+        const query = req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {};
+        
+        const anime = await Anime.find(query)
+            .collation({ locale: 'it' }) // Ignora maiuscole e minuscole nell'ordinamento
+            .sort({ title: 1, producer: 1 }) // Ordina per titolo e produttore
+            .exec();
 
         res.send({
             dati: anime,
-            page,
-            totalPages,
-            totalResults,
+            totalResults: anime.length, // Totale risultati
         });
     } catch (error) {
         console.error('Error fetching anime:', error);
@@ -38,16 +30,32 @@ export const getSingleAnime = async(req,res) => {
     }
 }
 
-export const createAnime = async(req,res) => {
-    const anime = new Anime({...req.body, cover: req.file.path});
-    let newAnime;
+export const createAnime = async (req, res) => {
     try {
-       newAnime = await anime.save();
-        res.send(anime);
+        console.log("req.body:", req.body); // Verifica i dati nel body
+        console.log("req.file:", req.file); // Verifica il file caricato
+
+        let coverPath;
+
+        // Verifica se viene fornito un URL per l'immagine o se c'è un file caricato
+        if (req.body.cover) {
+            coverPath = req.body.cover;
+        } else if (req.file) {
+            coverPath = req.file.path;
+        } else {
+            coverPath = 'https://via.placeholder.com/150'; // Immagine di fallback
+        }
+
+        const anime = new Anime({ ...req.body, cover: coverPath });
+        const newAnime = await anime.save();
+
+        res.status(201).send(newAnime);
     } catch (error) {
-        res.status(400).send(error);
+        console.error("Errore nella creazione dell'anime:", error);
+        res.status(400).send({ message: "Errore nella creazione dell'anime" });
     }
-}
+};
+
 
 export const editAnime = async(req,res) => {
     const { id } = req.params;

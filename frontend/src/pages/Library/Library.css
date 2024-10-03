@@ -1,0 +1,68 @@
+.library {
+    font-family: Arial, sans-serif; /* Font generale per il componente */
+    padding: 20px; /* Padding interno per il contenitore */
+    background-color: #f8f9fa; /* Colore di sfondo chiaro */
+}
+
+h1 {
+    text-align: center; /* Centra il titolo principale */
+    color: #333; /* Colore del titolo */
+}
+
+h2 {
+    color: #007bff; /* Colore blu per i sottotitoli */
+    border-bottom: 2px solid #007bff; /* Sottolineatura per i sottotitoli */
+    padding-bottom: 10px; /* Padding sotto il sottotitolo */
+    margin-top: 30px; /* Margine sopra il sottotitolo */
+}
+
+.grid {
+    display: grid; /* Imposta il layout in griglia */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Colonne adattabili */
+    gap: 20px; /* Spazio tra le celle della griglia */
+}
+
+.anime-card, .manga-card {
+    background-color: #ffffff; /* Colore di sfondo bianco per le schede */
+    border-radius: 8px; /* Angoli arrotondati per le schede */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Leggera ombra per le schede */
+    padding: 15px; /* Padding interno per le schede */
+    text-align: center; /* Testo centrato all'interno delle schede */
+    transition: transform 0.2s; /* Transizione per effetto hover */
+}
+
+.anime-card:hover, .manga-card:hover {
+    transform: scale(1.05); /* Effetto zoom al passaggio del mouse */
+}
+
+.anime-card img, .manga-card img {
+    border-radius: 4px; /* Angoli arrotondati per le immagini */
+    width: 100%; /* Larghezza dell'immagine al 100% della scheda */
+    height: auto; /* Altezza automatica per mantenere le proporzioni */
+}
+
+p {
+    color: #666; /* Colore del testo per i dettagli */
+    margin: 5px 0; /* Margine per i paragrafi */
+}
+
+button {
+    background-color: #007bff; /* Colore di sfondo blu per il bottone */
+    color: white; /* Colore del testo del bottone */
+    border: none; /* Rimuovi il bordo */
+    border-radius: 4px; /* Angoli arrotondati per il bottone */
+    padding: 10px 15px; /* Padding interno per il bottone */
+    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+    transition: background-color 0.3s; /* Transizione per il colore di sfondo */
+}
+
+button:hover {
+    background-color: #0056b3; /* Colore di sfondo al passaggio del mouse */
+}
+
+.search-input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+}

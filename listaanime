@@ -1,0 +1,123 @@
+const animeList = [
+    {
+        title: "One Piece",
+        cover: "https://www.example.com/one_piece_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "1071",
+        producer: "Toei Animation",
+        startDate: new Date("1999-10-20"),
+        endDate: null
+    },
+    {
+        title: "Naruto",
+        cover: "https://www.example.com/naruto_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "220",
+        producer: "Pierrot",
+        startDate: new Date("2002-10-03"),
+        endDate: new Date("2007-02-08")
+    },
+    {
+        title: "Attack on Titan",
+        cover: "https://www.example.com/attack_on_titan_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "87",
+        producer: "Wit Studio, MAPPA",
+        startDate: new Date("2013-04-07"),
+        endDate: new Date("2022-11-04")
+    },
+    {
+        title: "My Hero Academia",
+        cover: "https://www.example.com/my_hero_academia_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "136",
+        producer: "Bones",
+        startDate: new Date("2016-04-03"),
+        endDate: null
+    },
+    {
+        title: "Death Note",
+        cover: "https://www.example.com/death_note_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "37",
+        producer: "Madhouse",
+        startDate: new Date("2006-10-03"),
+        endDate: new Date("2007-06-27")
+    },
+    {
+        title: "Demon Slayer: Kimetsu no Yaiba",
+        cover: "https://www.example.com/demon_slayer_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "26",
+        producer: "Ufotable",
+        startDate: new Date("2019-04-06"),
+        endDate: new Date("2019-09-28")
+    },
+    {
+        title: "Dragon Ball",
+        cover: "https://www.example.com/dragon_ball_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "153",
+        producer: "Toei Animation",
+        startDate: new Date("1986-02-26"),
+        endDate: new Date("1989-04-19")
+    },
+    {
+        title: "Fullmetal Alchemist: Brotherhood",
+        cover: "https://www.example.com/fullmetal_alchemist_brotherhood_cover.jpg", // Sostituisci con il link corretto
+        episodes: "64",
+        producer: "Bones",
+        startDate: new Date("2009-04-05"),
+        endDate: new Date("2010-07-04")
+    },
+    {
+        title: "Sword Art Online",
+        cover: "https://www.example.com/sword_art_online_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "100+",
+        producer: "A-1 Pictures",
+        startDate: new Date("2012-07-08"),
+        endDate: null
+    },
+    {
+        title: "Tokyo Ghoul",
+        cover: "https://www.example.com/tokyo_ghoul_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "24",
+        producer: "Pierrot",
+        startDate: new Date("2014-07-04"),
+        endDate: new Date("2014-09-19")
+    },
+    {
+        title: "One Punch Man",
+        cover: "https://www.example.com/one_punch_man_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "24",
+        producer: "Madhouse, J.C. Staff",
+        startDate: new Date("2015-10-05"),
+        endDate: new Date("2016-07-02")
+    },
+    {
+        title: "Hunter x Hunter",
+        cover: "https://www.example.com/hunter_x_hunter_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "148",
+        producer: "Madhouse",
+        startDate: new Date("2011-10-02"),
+        endDate: new Date("2014-04-24")
+    },
+    {
+        title: "JoJo's Bizarre Adventure",
+        cover: "https://www.example.com/jojo_bizarre_adventure_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "152",
+        producer: "David Production",
+        startDate: new Date("2012-10-05"),
+        endDate: null
+    },
+    {
+        title: "Bleach",
+        cover: "https://www.example.com/bleach_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "366",
+        producer: "Studio Pierrot",
+        startDate: new Date("2004-10-05"),
+        endDate: new Date("2012-03-27")
+    },
+    {
+        title: "Kaiju No. 8",
+        cover: "https://www.example.com/kaiju_no_8_anime_cover.jpg", // Sostituisci con il link corretto
+        episodes: "TBD",
+        producer: "Production I.G",
+        startDate: new Date("2024-00-00"),
+        endDate: null
+      }
+
+];

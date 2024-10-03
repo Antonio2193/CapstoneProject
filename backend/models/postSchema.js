@@ -19,7 +19,11 @@ const postSchema = new Schema({
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment'
-    }]
+    }],
+    likes: {
+        count: { type: Number, default: 0 }, // Conteggio dei like
+        userIds: { type: [Schema.Types.ObjectId], default: [] } // Array di ID utenti che hanno messo like
+    }
 },
 { 
     collection: 'posts',

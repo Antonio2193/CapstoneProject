@@ -1,49 +1,67 @@
 .container-sm {
-    padding-top: 110px !important;
-  }
-  
-  @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+  padding-top: 110px !important;
+}
 
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-  .blog-main-title {
-    font-family: 'Bangers', cursive;
-    font-size: 48px;
-    /* font-size: 3rem; */
-    font-weight: bold;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    color: #ff0054; /* Colore tipico per un effetto manga */
-    
-  }
-  
-  .blog-main-content {
-    font-size: 1rem;
-    font-style: italic;
-  }
+.blog-main-title {
+  font-family: 'Bangers', cursive;
+  font-size: 48px;
+  font-weight: bold;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  color: #ff0054; /* Colore tipico per un effetto manga */
+}
 
-  .home-container {
-    position: relative;
-    padding: 20px;
-    border-radius: 8px;
-    min-height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow: hidden; /* Per gestire il pseudo-elemento */
-  }
-  
-  .home-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('../../backgroundImage/anime-crossover-ash-pokemon-asuna-yuuki-wallpaper-preview.jpg'); /* Immagine di sfondo */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(1px); /* Aggiunge la sfocatura */
-    z-index: -1; /* Mette lo sfondo dietro il contenuto */
-  }
-  
+.blog-main-content {
+  font-size: 1rem;
+  font-style: italic;
+}
+
+/* Classe per il background con immagine, visibile prima del login */
+.home-container {
+  margin-top: 75px; /* Margine per evitare sovrapposizione con la navbar */
+}
+
+.content {
+  padding: 20px; /* Padding per un aspetto migliore */
+}
+
+.home-container.with-bg {
+  position: relative;
+  padding: 20px;
+  border-radius: 0px;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.home-container.with-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../backgroundImage/anime-crossover-ash-pokemon-asuna-yuuki-wallpaper-preview.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(3px);
+  z-index: -1;
+}
+
+/* Classe per il gradient, visibile dopo il login */
+.home-container.logged-in-gradient {
+  position: relative;
+  padding: 20px;
+  border-radius: 0px;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #2c3e50, #34495e); /* Gradient blu notte */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}

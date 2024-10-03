@@ -8,6 +8,7 @@ import "./PostList.css";
 const PostList = () => {
   const { token } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState(new Set()); // Traccia i post che sono stati messi like
   const [search, setSearch] = useState("");
   const [aggiornaPostList, setAggiornaPostList] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,15 +33,24 @@ const PostList = () => {
     }
   };
 
+  const handleLike = (postId) => {
+    if (!likedPosts.has(postId)) {
+      setLikedPosts(prev => new Set(prev).add(postId)); // Aggiungi il post agli likedPosts
+      setPosts(posts.map(post => 
+        post._id === postId ? { ...post, likes: (post.likes || 0) + 1 } : post
+      ));
+    }
+  };
+
   return (
     <>
       <Row>
         {posts.map((post, i) => (
           <Col
             key={`item-${i}`}
-            md={10}
+            md={12}
             style={{
-              marginBottom: 50,
+              marginBottom: 50
             }}
           >
             <PostItem
@@ -48,6 +58,8 @@ const PostList = () => {
               {...post}
               setAggiornaPostList={setAggiornaPostList}
               aggiornaPostList={aggiornaPostList}
+              onLike={() => handleLike(post._id)}
+              liked={likedPosts.has(post._id)} // Passa lo stato del like
             />
           </Col>
         ))}

@@ -1,17 +1,24 @@
+/* Importa i font da Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Dancing+Script&display=swap');
+
 .blog-cover {
-  width: 100%; /* L'immagine si adatta alla larghezza della card */
-  height: 300px; /* Altezza fissa ma ridotta, per un layout compatto */
-  object-fit: cover; /* L'immagine copre l'area senza distorsioni */
-  object-position: center; /* L'immagine viene centrata */
+  width: 100%; /* L'immagine copre l'intera larghezza della card */
+  height: 400px; /* Altezza aumentata per dare maggiore visibilità all'immagine */
+  object-fit: cover; /* Copre l'area senza distorsioni */
+  object-position: center; /* Centra l'immagine */
 }
 
 .blog-card {
-  width: 100%; /* La card occupa il 100% del suo contenitore */
-  max-width: 600px; /* Limita la larghezza massima della card a circa 600px */
-  margin: 1rem auto; /* Centra la card e aggiunge un po' di spazio attorno */
-  border: 1px solid #e0e0e0; /* Leggera ombreggiatura o bordo per un effetto di separazione */
-  border-radius: 8px; /* Bordo leggermente arrotondato */
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Aggiunge una leggera ombra per dare profondità */
+  width: 100%; /* La card occupa l'intera larghezza del suo contenitore */
+  max-width: 900px; /* Aumenta la larghezza massima della card a 900px */
+  margin: 2rem auto; /* Aggiunge margine attorno alla card */
+  padding: 20px; /* Più spazio all'interno della card */
+  border: 1px solid #e0e0e0; /* Leggera ombreggiatura o bordo */
+  border-radius: 12px; /* Bordo leggermente più arrotondato */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Ombra più pronunciata per maggiore profondità */
+  background-color: #34495e; /* Colore di sfondo della card */
+  color: #ecf0f1; /* Colore del testo chiaro per contrasto */
+  font-family: 'Righteous', cursive; /* Font per il testo della card */
 }
 
 .blog-link {
@@ -20,23 +27,33 @@
 }
 
 .blog-card .card-body {
-  padding: 16px; /* Aggiunge un po' di spazio attorno al testo */
+  padding: 20px; /* Più spazio attorno al testo */
 }
 
 .blog-card .card-title {
-  font-size: 1.25rem; /* Dimensione più grande per il titolo */
-  font-weight: bold; /* Evidenzia il titolo */
+  font-size: 1.5rem; /* Aumenta la dimensione del titolo */
+  font-weight: bold; /* Mantiene il titolo ben visibile */
+  font-family: 'Righteous', cursive; /* Font per il titolo */
+}
+
+.blog-card .card-text {
+  font-size: 1.125rem; /* Testo leggermente più grande per migliorare la leggibilità */
+  line-height: 1.5; /* Spaziatura comoda tra le righe di testo */
+  font-family: 'Righteous', cursive; /* Font per il testo */
 }
 
 .blog-card .card-footer {
-  padding: 12px 16px; /* Spaziatura comoda nel footer */
+  padding: 16px 20px; /* Spaziatura comoda nel footer */
   display: flex;
   justify-content: space-between; /* Distribuisce uniformemente i pulsanti */
   align-items: center;
+  font-family: 'Dancing Script', cursive; /* Font decorativo per il footer */
 }
 
 button {
   display: inline-block;
   margin: 0.5rem;
   padding: 0.5rem 1rem;
+  background-color: #e74c3c; /* Colore per i pulsanti */
+  color: #fff; /* Testo bianco per i pulsanti */
 }
