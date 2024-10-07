@@ -5,21 +5,21 @@ import User from "../models/userSchema.js";
 export const getPosts = async (req, res) => {
     const page = req.query.page || 1;
     let perPage = req.query.perPage || 8;
-    perPage = perPage > 10 ? 9 : perPage;
+    perPage = perPage > 10 ? 10 : perPage; // Limita a un massimo di 10 post per pagina
 
     try {
         // Filtro opzionale per il titolo
         const filter = req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {};
 
-        // Trova i post, ordina per titolo e categoria, applica paginazione
+        // Trova i post, ordina per data di creazione (dal più recente al meno recente) e applica paginazione
         const posts = await Post.find(filter)
             .collation({ locale: 'it' }) // Ignora maiuscole e minuscole
-            .sort({ title: 1, category: 1 })
+            .sort({ createdAt: -1 }) // Ordina per data, dal più recente
             .skip((page - 1) * perPage)
             .limit(perPage)
             .populate({
-                path: 'comments', // Popola i commenti collegati
-                populate: { path: 'author', select: 'name' } // Popola anche il campo 'author' dei commenti con solo il nome
+                path: 'comments',
+                populate: { path: 'author', select: 'name' } // Popola anche il campo 'author' dei commenti
             })
             .exec();
 

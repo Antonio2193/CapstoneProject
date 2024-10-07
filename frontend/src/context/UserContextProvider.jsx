@@ -1,5 +1,5 @@
 import { useState, createContext, useEffect } from "react";
-import { me, loadUserLibrary } from "../data/fetch";
+import { me, loadUserLibrary, updatePrivacy } from "../data/fetch";
 
 export const UserContext = createContext();
 
@@ -23,14 +23,15 @@ export default function UserContextProvider({ children }) {
 
   const getMyLibrary = async () => {
     if (token && userInfo) {
-      try {
-        const libraryData = await loadUserLibrary(userInfo._id); // Funzione per caricare la MyLibrary
-        setMyLibrary(libraryData);
-      } catch (error) {
-        console.error("Errore nel caricamento della libreria dell'utente:", error);
-      }
+        try {
+            const libraryData = await loadUserLibrary(userInfo._id);
+            setMyLibrary(libraryData);
+            console.log("MyLibrary aggiornata con:", libraryData); // Verifica la risposta
+        } catch (error) {
+            console.error("Errore nel caricamento della libreria dell'utente:", error);
+        }
     }
-  };
+};
 
   // Nuova funzione per aggiornare myLibrary con un anime aggiunto
   const addAnimeToMyLibrary = (addedAnime) => {
@@ -47,6 +48,29 @@ export default function UserContextProvider({ children }) {
       manga: [...prevLibrary.manga, addedManga]
     }));
   };
+
+  // Aggiorna la privacy di un elemento nella libreria
+  const togglePrivacy = async (itemId, type, isPrivate) => {
+    console.log("Valori passati a togglePrivacy:", { itemId, type, isPrivate });
+    try {
+        // Assicurati di passare solo isPrivate come oggetto
+        const updatedItem = await updatePrivacy(userInfo._id, itemId, { isPrivate }); 
+        setMyLibrary(prevLibrary => ({
+            ...prevLibrary,
+            [type]: prevLibrary[type].map(item => 
+                item._id === itemId ? { ...item, isPrivate: updatedItem.isPrivate } : item
+            )
+        }));
+    } catch (error) {
+        console.error("Errore nell'aggiornamento della privacy:", error);
+    }
+};
+
+
+
+
+
+
 
   // Effetto per ottenere i dati dell'utente
   useEffect(() => {
@@ -66,7 +90,9 @@ export default function UserContextProvider({ children }) {
     myLibrary, 
     setMyLibrary,
     addAnimeToMyLibrary, // Aggiungiamo queste funzioni per aggiornarle globalmente
-    addMangaToMyLibrary 
+    addMangaToMyLibrary,
+    getMyLibrary,
+    togglePrivacy
   };
 
   return (

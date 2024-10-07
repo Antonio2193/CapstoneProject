@@ -33,7 +33,6 @@ const Post = () => {
   const [comments, setComments] = useState([]);
   const [authorDetails, setAuthorDetails] = useState(null); // Stato per memorizzare i dettagli dell'autore
   const { token } = useContext(UserContext);
-  console.log("Token from Context:", token);
   const decodedToken = token ? jwtDecode(token) : null;
   const authorIdFromToken = decodedToken ? decodedToken.userId : null; // Aggiornato per usare userId
   const params = useParams();

@@ -373,3 +373,27 @@ export const createManga = async (mangaData) => {
         throw error;
     }
 };
+
+export const updatePrivacy = async (userId, itemId, { isPrivate }) => { // Destruttura l'oggetto
+    console.log("Valori inviati:", { userId, itemId, isPrivate }); // Log per debug
+    const res = await fetch(`http://localhost:5000/api/v1/library/user/${userId}/myLibrary/${itemId}/privacy`, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ isPrivate }) // Invia solo isPrivate
+    });
+
+    if (!res.ok) {
+        const errorText = await res.text();
+        console.error('Errore dal server:', errorText);
+        throw new Error('Errore nell\'aggiornamento della privacy');
+    }
+
+    return await res.json();
+};
+
+
+
+

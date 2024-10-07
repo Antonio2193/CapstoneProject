@@ -6,13 +6,14 @@ import {
   addMangaToLibrary,
   createAnime,
   createManga,
-} from "../../data/fetch"; // Importa createAnime e createManga
+} from "../../data/fetch";
 import { UserContext } from "../../context/UserContextProvider";
-import { Form, Button } from "react-bootstrap"; // Importa il Form e Button di Bootstrap
+import { Form, Button } from "react-bootstrap";
 import "./Library.css";
 
 const Library = () => {
-  const { token, userInfo, myLibrary, setMyLibrary } = useContext(UserContext);
+  const { token, userInfo, myLibrary, setMyLibrary, getMyLibrary } =
+    useContext(UserContext);
   const [anime, setAnime] = useState([]);
   const [manga, setManga] = useState([]);
   const [loadingAnime, setLoadingAnime] = useState(true);
@@ -23,17 +24,22 @@ const Library = () => {
   // Stato per il termine di ricerca
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Stato per gestire il form di aggiunta
+  // Stato per forzare il re-render
+  const [update, setUpdate] = useState(false);
+
+  // Stato per gestire la visualizzazione del form
   const [showAddForm, setShowAddForm] = useState(false);
+
+  // Stato per il nuovo item da aggiungere (anime o manga)
   const [newItem, setNewItem] = useState({
     title: "",
     cover: "",
     episodesOrChapters: "",
     producerOrAuthor: "",
-    volumes: "", // Aggiungi qui i volumi
+    volumes: "",
     startDate: "",
     endDate: "",
-    type: "anime", // Default 'anime', può essere cambiato in 'manga'
+    type: "anime", // Default 'anime'
   });
 
   useEffect(() => {
@@ -75,11 +81,19 @@ const Library = () => {
 
     try {
       const addedAnime = await addAnimeToLibrary(userInfo._id, animeId);
+      alert("Anime aggiunto alla libreria");
+
+      // Aggiorna la libreria locale
       setMyLibrary((prevLibrary) => ({
         ...prevLibrary,
         anime: [...(prevLibrary.anime || []), addedAnime],
       }));
-      console.log("Anime aggiunto alla libreria:", addedAnime);
+
+      // Forza il re-render
+      setUpdate((prev) => !prev);
+
+      // Aggiorna la libreria dal backend
+      await getMyLibrary();
     } catch (error) {
       console.error(
         "Errore nell'aggiungere l'anime alla libreria:",
@@ -96,11 +110,19 @@ const Library = () => {
 
     try {
       const addedManga = await addMangaToLibrary(userInfo._id, mangaId);
+      alert("Manga aggiunto alla libreria");
+
+      // Aggiorna la libreria locale
       setMyLibrary((prevLibrary) => ({
         ...prevLibrary,
         manga: [...(prevLibrary.manga || []), addedManga],
       }));
-      console.log("Manga aggiunto alla libreria:", addedManga);
+
+      // Forza il re-render
+      setUpdate((prev) => !prev);
+
+      // Aggiorna la libreria dal backend
+      await getMyLibrary();
     } catch (error) {
       console.error(
         "Errore nell'aggiungere il manga alla libreria:",
@@ -109,6 +131,7 @@ const Library = () => {
     }
   };
 
+  // Verifica se un elemento è già in libreria
   const isInLibrary = (id, type) => {
     return myLibrary[type] && myLibrary[type].some((item) => item._id === id);
   };
@@ -138,7 +161,7 @@ const Library = () => {
           title: newItem.title,
           cover: newItem.cover,
           chapters: newItem.episodesOrChapters,
-          volumes: newItem.volumes, // Passa i volumi qui
+          volumes: newItem.volumes,
           author: newItem.producerOrAuthor,
           startDate: newItem.startDate,
           endDate: newItem.endDate,
@@ -168,7 +191,7 @@ const Library = () => {
           type="text"
           placeholder="Cerca anime o manga..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} // Aggiorna il termine di ricerca
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
       </Form.Group>
@@ -223,7 +246,7 @@ const Library = () => {
               <Form.Label>Volumes</Form.Label>
               <Form.Control
                 type="text"
-                value={newItem.volumes} // Campo per i volumi
+                value={newItem.volumes}
                 onChange={(e) =>
                   setNewItem({ ...newItem, volumes: e.target.value })
                 }
@@ -311,14 +334,11 @@ const Library = () => {
                     ? new Date(item.endDate).toLocaleDateString()
                     : "Continuing"}
                 </p>
-                <button
-                  onClick={() => handleAddAnime(item._id)}
-                  disabled={isInLibrary(item._id, "anime")}
-                >
-                  {isInLibrary(item._id, "anime")
-                    ? "Già in Libreria"
-                    : "Aggiungi a My Library"}
-                </button>
+                {!isInLibrary(item._id, "anime") && (
+                  <button onClick={() => handleAddAnime(item._id)}>
+                    Aggiungi a My Library
+                  </button>
+                )}
               </div>
             ))}
           </div>
@@ -344,8 +364,7 @@ const Library = () => {
                 </p>
                 <p>
                   <strong>Volumes:</strong> {item.volumes}
-                </p>{" "}
-                {/* Volumi ora visibili */}
+                </p>
                 <p>
                   <strong>Author:</strong> {item.author}
                 </p>
@@ -359,14 +378,11 @@ const Library = () => {
                     ? new Date(item.endDate).toLocaleDateString()
                     : "Continuing"}
                 </p>
-                <button
-                  onClick={() => handleAddManga(item._id)}
-                  disabled={isInLibrary(item._id, "manga")}
-                >
-                  {isInLibrary(item._id, "manga")
-                    ? "Già in Libreria"
-                    : "Aggiungi a My Library"}
-                </button>
+                {!isInLibrary(item._id, "manga") && (
+                  <button onClick={() => handleAddManga(item._id)}>
+                    Aggiungi a My Library
+                  </button>
+                )}
               </div>
             ))}
           </div>

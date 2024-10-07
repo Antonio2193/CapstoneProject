@@ -1,24 +1,80 @@
-import userLibrarySchema from '../models/userLibrarySchema.js';
+import UserLibrary from '../models/userLibrarySchema.js';
 
-// Funzione per ottenere la libreria dell'utente
 export const getUserLibrary = async (req, res) => {
-    const userId = req.params.userId;
+    const currentUserId = req.loggedUser._id; // ID dell'utente loggato
+    const targetUserId = req.params.userId; // ID dell'utente di cui vogliamo recuperare la libreria
 
     try {
-        // Popola i campi animeId e mangaId con i dati completi dell'anime e manga
-        const userAnimeEntries = await userLibrarySchema.find({ userId, type: 'anime' }).populate('animeId');
-        const userMangaEntries = await userLibrarySchema.find({ userId, type: 'manga' }).populate('mangaId');
+        const userAnimeEntries = await UserLibrary.find({ userId: targetUserId, type: 'anime' }).populate('animeId');
+        const userMangaEntries = await UserLibrary.find({ userId: targetUserId, type: 'manga' }).populate('mangaId');
 
         const userLibrary = {
-            anime: userAnimeEntries.map(entry => entry.animeId), // Ottieni i dati completi degli anime
-            manga: userMangaEntries.map(entry => entry.mangaId), // Ottieni i dati completi dei manga
+            anime: userAnimeEntries.map(entry => {
+                console.log('Entry:', entry);
+                console.log('isPrivate:', entry.isPrivate);
+                console.log('User ID from entry:', entry.userId.toString());
+                console.log('Current User ID:', currentUserId.toString());
+                
+                // Verifica se animeId è definito
+                if (!entry.animeId) {
+                    console.log('AnimeId non trovato per questa entry.');
+                    return null; // O gestisci l'errore in altro modo
+                }
+
+                // Verifica se l'ID dell'utente è uguale
+                if (entry.isPrivate && entry.userId.toString() !== currentUserId.toString()) {
+                    console.log(`Anime ${entry.animeId.title} non mostrato, è privato.`);
+                    return null; // Non mostrare l'elemento se è privato e non di proprietà
+                }
+                return {
+                    ...entry.animeId._doc,
+                    _id: entry._id, // id dell'UserLibrary entry
+                    isPrivate: entry.isPrivate,
+                };
+            }).filter(entry => entry !== null), // Filtra i nulli
+
+            manga: userMangaEntries.map(entry => {
+                console.log('Entry:', entry);
+                console.log('isPrivate:', entry.isPrivate);
+                console.log('User ID from entry:', entry.userId.toString());
+                console.log('Current User ID:', currentUserId.toString());
+                
+                // Verifica se mangaId è definito
+                if (!entry.mangaId) {
+                    console.log('MangaId non trovato per questa entry.');
+                    return null; // O gestisci l'errore in altro modo
+                }
+
+                // Verifica se l'ID dell'utente è uguale
+                if (entry.isPrivate && entry.userId.toString() !== currentUserId.toString()) {
+                    console.log(`Manga ${entry.mangaId.title} non mostrato, è privato.`);
+                    return null; // Non mostrare l'elemento se è privato e non di proprietà
+                }
+                return {
+                    ...entry.mangaId._doc,
+                    _id: entry._id, // id dell'UserLibrary entry
+                    isPrivate: entry.isPrivate,
+                };
+            }).filter(entry => entry !== null), // Filtra i nulli
         };
 
+        console.log('User Library:', userLibrary); // Log per il debug finale
         res.status(200).json(userLibrary);
     } catch (error) {
+        console.error("Errore:", error); // Log dell'errore
         res.status(500).json({ message: error.message });
     }
 };
+
+
+
+
+
+
+
+
+
+
 
 // Funzione per aggiungere anime alla libreria
 // Funzione per aggiungere anime alla libreria
@@ -28,12 +84,12 @@ export const addAnimeToLibrary = async (req, res) => {
 
     try {
         // Controlla se l'anime è già nella libreria dell'utente
-        const existingEntry = await userLibrarySchema.findOne({ userId, animeId, type: 'anime' });
+        const existingEntry = await UserLibrary.findOne({ userId, animeId, type: 'anime' });
         if (existingEntry) {
             return res.status(400).json({ errorCode: 'ANIME_ALREADY_IN_LIBRARY', message: 'Anime già presente nella libreria' });
         }
 
-        const newEntry = new userLibrarySchema({ userId, animeId, type: 'anime' });
+        const newEntry = new UserLibrary({ userId, animeId, type: 'anime' });
         await newEntry.save();
         res.status(201).json({ message: 'Anime aggiunto alla libreria' });
     } catch (error) {
@@ -49,12 +105,12 @@ export const addMangaToLibrary = async (req, res) => {
 
     try {
         // Controlla se il manga è già nella libreria dell'utente
-        const existingEntry = await userLibrarySchema.findOne({ userId, mangaId, type: 'manga' });
+        const existingEntry = await UserLibrary.findOne({ userId, mangaId, type: 'manga' });
         if (existingEntry) {
             return res.status(400).json({ errorCode: 'MANGA_ALREADY_IN_LIBRARY', message: 'Manga già presente nella libreria' });
         }
 
-        const newEntry = new userLibrarySchema({ userId, mangaId, type: 'manga' });
+        const newEntry = new UserLibrary({ userId, mangaId, type: 'manga' });
         await newEntry.save();
         res.status(201).json({ message: 'Manga aggiunto alla libreria' });
     } catch (error) {
@@ -62,3 +118,36 @@ export const addMangaToLibrary = async (req, res) => {
         res.status(500).json({ errorCode: 'INTERNAL_ERROR', message: 'Errore durante l\'aggiunta del manga alla libreria' });
     }
 };
+
+// Funzione per aggiornare la privacy di un elemento nella libreria
+export const updatePrivacy = async (req, res) => {
+    const userId = req.params.userId; // ID dell'utente
+    const itemId = req.params.itemId; // _id dell'oggetto UserLibrary
+    const isPrivate = req.body.isPrivate; // Dovrebbe essere un booleano
+
+    console.log("User ID:", userId);
+    console.log("Item ID:", itemId);
+    console.log("Is Private:", isPrivate); // Dovrebbe stampare true o false
+    console.log(req.body);
+
+    try {
+        const updatedEntry = await UserLibrary.findByIdAndUpdate(
+            itemId,
+            { isPrivate: isPrivate }, // Assicurati che sia booleano
+            { new: true } // Restituisce il documento aggiornato
+        );
+
+        if (!updatedEntry) {
+            return res.status(404).json({ message: "Elemento non trovato" });
+        }
+
+        res.status(200).json(updatedEntry);
+    } catch (error) {
+        console.error("Errore nell'aggiornamento della privacy:", error);
+        res.status(500).json({ message: "Errore nell'aggiornamento della privacy" });
+    }
+};
+
+
+
+
