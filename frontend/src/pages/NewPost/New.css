@@ -1,11 +1,84 @@
+/* Contenitore principale per il nuovo post */
 .new-blog-container {
-    display: flex;
-    flex-direction: column;
-    margin-top: 100px;
-  }
-  
-  .new-blog-content {
-    height: 400px;
-    margin-bottom: 80px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  background: linear-gradient(to bottom right, #9a4ef0, #50c2c9); /* Gradiente sfondo */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2); /* Ombreggiatura soft */
+}
+
+/* Editor di contenuto */
+.new-blog-content {
+  height: 400px;
+  margin-bottom: 80px;
+  background-color: #ffffff; /* Sfondo chiaro per contrasto */
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form labels */
+form label {
+  font-weight: bold;
+  color: #ecf0f1; /* Testo chiaro per coerenza col tema */
+}
+
+/* Select per Categoria */
+#blog-category {
+  background-color: #34495e;
+  color: #ecf0f1;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  transition: background-color 0.3s ease;
+}
+
+#blog-category:hover {
+  background-color: #3d9ca8;
+}
+
+/* Input per la Cover */
+#cover {
+  background-color: #34495e;
+  color: #ecf0f1;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+/* Bottoni */
+button,
+.btn-dark {
+  background-color: #3498db;
+  border: none;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+button:hover,
+.btn-dark:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+button:active,
+.btn-dark:active {
+  transform: scale(0.98);
+}
+
+.btn-outline-dark {
+  color: #3498db;
+  border: 2px solid #3498db;
+  background: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-dark:hover {
+  background-color: #3498db;
+  color: #ffffff;
+}

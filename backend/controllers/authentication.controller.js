@@ -53,7 +53,7 @@ export const login = async (req, res) => {
 
     // se la password coincide allora genero il jwt e lo restituisco
     jwt.sign(
-        { userId: utente.id, },
+        { userId: utente.id, avatar: utente.avatar },
         process.env.JWT_SECRET,
         { expiresIn: "1h" },
         (err, jwtToken) => {
@@ -71,5 +71,5 @@ export const me = async(req,res) =>{
 
 
 export const callbackGoogle = async (req, res) =>{
-    res.redirect(`http://localhost:3000?token=${req.user.jwtToken}`)
+    res.redirect(`http://localhost:3000?token=${req.user.jwtToken}&avatar=${req.user.avatar}`)
 }

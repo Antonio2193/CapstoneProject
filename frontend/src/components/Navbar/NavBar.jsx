@@ -54,123 +54,129 @@ const NavBar = (props) => {
 
   return (
     <Navbar expand="lg" className="blog-navbar" fixed="top">
-      <Container className="justify-content-between">
+      <Container>
         <Navbar.Brand as={Link} to="/">
-          {/* Qui metterai il logo in seguito */}
           <span className="blog-navbar-title">Nome Sito</span>
         </Navbar.Brand>
         
-        {/* Link Library vicino al logo */}
-        <Link to="/library" className="navbar-link ms-3">
-          Library
-        </Link>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <div className="d-flex align-items-center ms-auto">
+            {/* Link alla libreria vicino al logo */}
+            {token &&( <Link to="/library" className="navbar-link ms-3">
+              Library
+            </Link>)}
 
-        {/* Link MyLibrary vicino al link Library */}
-        <Link to="/mylibrary" className="navbar-link ms-3">
-          MyLibrary
-        </Link>
+            
+            {token &&(<Link to="/mylibrary" className="navbar-link ms-3">
+              MyLibrary
+            </Link>)}
 
-        {/* Aggiungi il link per la pagina di ricerca utenti */}
-        <Link to="/search" className="navbar-link ms-3">
-          Cerca Utenti
-        </Link>
+            
+            {token &&(<Link to="/search" className="navbar-link ms-3">
+              Cerca Utenti
+            </Link>)}
 
-        <Modal show={showReg} onHide={handleCloseReg}>
-          <Modal.Header closeButton>
-            <Modal.Title>REGISTER</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  value={regFormValue.email}
-                  onChange={handleChangeRegistration}
-                  placeholder="name@example.com"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  value={regFormValue.password}
-                  onChange={handleChangeRegistration}
-                  placeholder="your password"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput5">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  value={regFormValue.name}
-                  onChange={handleChangeRegistration}
-                  placeholder="your name"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput6">
-                <Form.Label>Surname</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="surname"
-                  value={regFormValue.surname}
-                  onChange={handleChangeRegistration}
-                  placeholder="your surname"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput7">
-                <Form.Label>Avatar</Form.Label>
-                <Form.Control
-                  type="file"
-                  name="avatar"
-                  onChange={handleChangeImage}
-                  placeholder="your picture"
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReg}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleRegister}>
-              Register now
-            </Button>
-          </Modal.Footer>
-        </Modal>
+            {!token && (
+              <Button className="ms-3" variant="secondary" onClick={handleShowReg}>
+                Register
+              </Button>
+            )}
 
-        <div className="d-flex">
-          {!token && (
-            <Button className="ms-3" variant="secondary" onClick={handleShowReg}>
-              Register
-            </Button>
-          )}
-          {token && (
-            <Button as={Link} to="/new" className="blog-navbar-add-button bg-dark">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-plus-lg"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
-              </svg>
-              New Post
-            </Button>
-          )}
-          {token && (
-            <Button className="ms-2 me-2 logout" variant="primary" onClick={handleLogout}>
-              Logout
-            </Button>
-          )}
-          {userInfo && <Image src={userInfo.avatar} className="userAvatar me-2" />}
-        </div>
+            {token && (
+              <Button as={Link} to="/new" className="blog-navbar-add-button bg-dark">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="bi bi-plus-lg"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
+                </svg>
+                Post
+              </Button>
+            )}
+
+            {token && (
+              <Button className="ms-2 me-2 logout" variant="primary" onClick={handleLogout}>
+                Logout
+              </Button>
+            )}
+            
+            {userInfo && <Image src={userInfo.avatar} className="userAvatar me-2" />}
+          </div>
+        </Navbar.Collapse>
       </Container>
+
+      {/* Modal per la registrazione */}
+      <Modal show={showReg} onHide={handleCloseReg}>
+        <Modal.Header closeButton>
+          <Modal.Title>REGISTER</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={regFormValue.email}
+                onChange={handleChangeRegistration}
+                placeholder="name@example.com"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                value={regFormValue.password}
+                onChange={handleChangeRegistration}
+                placeholder="your password"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput5">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={regFormValue.name}
+                onChange={handleChangeRegistration}
+                placeholder="your name"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput6">
+              <Form.Label>Surname</Form.Label>
+              <Form.Control
+                type="text"
+                name="surname"
+                value={regFormValue.surname}
+                onChange={handleChangeRegistration}
+                placeholder="your surname"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput7">
+              <Form.Label>Avatar</Form.Label>
+              <Form.Control
+                type="file"
+                name="avatar"
+                onChange={handleChangeImage}
+                placeholder="your picture"
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseReg}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleRegister}>
+            Register now
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Navbar>
   );
 };

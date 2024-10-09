@@ -1,12 +1,38 @@
+/* Stile per il Contenitore della Paginazione */
 .pagination-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px; /* per dare un po' di spazio sopra la paginazione */
-  }
-  
-  .pagination-controls span {
-    margin: 0 10px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+}
 
-  
+.pagination-controls span {
+  margin: 0 10px;
+  color: #666;
+}
+
+/* Pulsanti di Paginazione */
+.pagination-controls button {
+  background-color: #9a4ef0; /* Colore viola per un look anime */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(154, 78, 240, 0.3); /* Ombra colorata */
+  margin: 0 5px;
+}
+
+.pagination-controls button:hover {
+  background-color: #7d3ed2;
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}

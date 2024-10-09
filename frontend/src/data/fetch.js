@@ -394,6 +394,24 @@ export const updatePrivacy = async (userId, itemId, { isPrivate }) => { // Destr
     return await res.json();
 };
 
+export const deleteFromLibrary = async (userId, itemId) => {
+    const res = await fetch(`http://localhost:5000/api/v1/library/user/${userId}/myLibrary/${itemId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!res.ok) {
+        const errorText = await res.text();
+        console.error('Errore dal server:', errorText);
+        throw new Error('Errore nell\'eliminazione dell\'elemento dalla libreria');
+    }
+
+    return await res.json();
+};
+
 
 
 

@@ -167,7 +167,7 @@ const Post = () => {
               <Col
                 key={comment._id}
                 md={8}
-                className="mb-3"
+                className="mb-3 comment"
                 style={{ marginBottom: 20 }}
               >
                 <div className="mt-2 border rounded bg-light">

@@ -25,7 +25,7 @@ const Home = (props) => {
 
   const handleLogin = async () => {
     try {
-      const tokenObj = await login(formValue); // Ottieni il token da mettere nel localStorage
+      const tokenObj = await login(formValue);
       console.log(tokenObj);
       if (tokenObj && tokenObj.token) {
         localStorage.setItem("token", tokenObj.token);
@@ -50,26 +50,31 @@ const Home = (props) => {
     console.log("Avatar URL:", avatar);
 
     if (token) {
-      // Salva il token nel localStorage e nel contesto
       localStorage.setItem('token', token);
       setToken(token);
 
-      // Aggiorna il contesto con le informazioni dell'utente
       setUserInfo({
         name: name || '',
         avatar: avatar || '',
         email: email || ''
       });
 
-      // Rimuovi i parametri di ricerca dall'URL dopo averli utilizzati
-      setSearchParams({});
+      setTimeout(() => {
+        setSearchParams({});
+      }, 100); // Imposta un leggero ritardo per dare tempo a `userInfo` di aggiornarsi
     }
   }, [searchParams, setToken, setUserInfo, setSearchParams]);
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5000/api/v1/auth/login-google";
+  };
+
   return (
     <Container fluid className={`home-container ${!token ? 'with-bg' : 'logged-in-gradient'}`}>
-      <div className="content"> {/* Aggiunto per gestire lo scrolling */}
+      <div className="overlay" />
+      <div className="content"> 
         {/* Mostra il titolo e il paragrafo solo se l'utente NON è loggato */}
+        <div className="home-content text-center  mt-5">
         {!token && (
           <>
             <h1 className="blog-main-title mb-3">Benvenuto su OtakuWorld!</h1>
@@ -78,19 +83,15 @@ const Home = (props) => {
             </p>
           </>
         )}
-
+        </div>
         {/* Mostra i pulsanti di login solo se l'utente NON è loggato */}
         {!token && (
-          <div>
+          <div className="text-center btn-login">
             <Button variant="primary" onClick={handleShow}>
               Login
             </Button>
             or
-            <Button
-              variant="primary"
-              as={Link}
-              to={"http://localhost:5000/api/v1/auth/login-google"}
-            >
+            <Button variant="primary" onClick={handleGoogleLogin}>
               Login with Google
             </Button>
           </div>

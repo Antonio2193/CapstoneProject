@@ -4,61 +4,146 @@
   width: 180px; /* Larghezza del logo */
 }
 
+/* Navbar Styling */
 .blog-navbar {
-  padding-top: 25px; /* Padding superiore */
-  padding-bottom: 25px; /* Padding inferiore */
-  background: linear-gradient(to bottom, #34495e, #2c3e50); /* Gradient della navbar */
-  color: #ecf0f1; /* Colore del testo */
-  -webkit-box-shadow: 2px 0px 18px 1px rgba(222, 222, 222, 1); /* Ombra per la navbar */
-  -moz-box-shadow: 2px 0px 18px 1px rgba(222, 222, 222, 1); /* Ombra per la navbar */
-  box-shadow: 2px 0px 4px 1px rgba(222, 222, 222, 1); /* Ombra per la navbar */
-  font-family: 'Righteous', cursive; /* Applicare il font Righteous */
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: linear-gradient(to bottom right, #7e3aba, #3d9ca8); /* Gradiente più scuro per continuità */
+  color: #ecf0f1;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.4);
+  font-family: 'Righteous', cursive;
+  border-bottom: 2px solid rgba(80, 194, 201, 0.2);
 }
+/* .blog-navbar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: linear-gradient(to bottom right, #7e3aba, #3d9ca8);
+  color: #ecf0f1;
+  font-family: 'Righteous', cursive;
+  border-bottom: 2px solid rgba(80, 194, 201, 0.2);
+} */
 
-.blog-navbar-add-button {
-  display: flex; /* Flex per allineare gli elementi */
-  align-items: center; /* Allineamento verticale al centro */
-  width: 100px; /* Larghezza del pulsante "New Post" */
-  height: 50px; /* Altezza del pulsante */
-  background-color: #3498db; /* Colore di sfondo per il pulsante "New Post" */
-  color: white; /* Colore del testo */
-  border: none; /* Rimuove il bordo */
-  text-decoration: none; /* Rimuove la sottolineatura */
-  transition: background-color 0.3s; /* Transizione al passaggio del mouse */
-}
-
-.blog-navbar-add-button:hover {
-  background-color: #2980b9; /* Colore di sfondo al passaggio del mouse */
-}
-
-.logout {
-  width: 100px; /* Larghezza del pulsante di logout */
-  height: 50px; /* Altezza del pulsante di logout */
-  background-color: #e74c3c; /* Colore di sfondo per il pulsante di logout */
-  color: white; /* Colore del testo */
-  border: none; /* Rimuove il bordo */
-  transition: background-color 0.3s; /* Transizione al passaggio del mouse */
-}
-
-.logout:hover {
-  background-color: #c0392b; /* Colore di sfondo al passaggio del mouse per il logout */
-}
-
-.userAvatar {
-  width: 60px; /* Larghezza dell'avatar */
-  height: 60px; /* Altezza dell'avatar */
-  border-radius: 50%; /* Rende l'avatar circolare */
-  right: 0px; /* Posizionamento a destra */
-}
-
+/* Link nella Navbar */
 .navbar-link {
-  color: #ecf0f1; /* Colore del testo per i link della navbar */
-  text-decoration: none; /* Rimuove la sottolineatura */
-  font-weight: bold; /* Grassetto */
-  padding: 0 10px; /* Padding orizzontale */
-  font-family: 'Righteous', cursive; /* Applicare il font Righteous ai link */
+  color: #ecf0f1; /* Azzurro brillante */
+  font-weight: bold;
+  padding: 0 12px;
+  font-family: 'Righteous', cursive;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  text-decoration: none;
 }
 
 .navbar-link:hover {
-  text-decoration: underline; /* Sottolinea al passaggio del mouse */
+  color: #3bb5bc; /* Tonalità più chiara dell'azzurro */
+  text-shadow: 0px 0px 4px #3bb5bc; /* Effetto neon */
 }
+
+/* Bottone "New Post" */
+.blog-navbar-add-button {
+  display: flex !important; /* Flex per centramento */
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important; /* Rimuove padding di Bootstrap */
+  height: 40px !important; /* Altezza fissa */
+  width: 100px !important; /* Larghezza fissa */
+  font-size: 1rem !important; /* Dimensione testo */
+  background-color: #3498db !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: bold !important;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(80, 194, 201, 0.3) !important;
+  line-height: normal !important;
+  margin-top: 2px !important; /* Aggiustamento per centratura */
+}
+
+.blog-navbar-add-button:hover {
+  background-color: #2980b9 !important;
+  transform: scale(1.08);
+  box-shadow: 0px 0px 12px rgba(41, 128, 185, 0.5) !important;
+}
+
+/* Bottone Logout */
+.logout {
+  padding: 8px 16px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+.logout:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+  box-shadow: 0px 0px 12px rgba(192, 57, 43, 0.5); /* Effetto neon rosso */
+}
+
+/* Stile Avatar Utente */
+.userAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #50c2c9; /* Bordo azzurro neon */
+  transition: transform 0.2s ease;
+}
+
+.userAvatar:hover {
+  transform: scale(1.1); /* Leggera espansione al passaggio */
+}
+
+
+/* .navbar-link {
+  color: #50c2c9;
+  font-weight: bold;
+  padding: 0 12px;
+  font-family: 'Righteous', cursive;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: #3bb5bc;
+  text-shadow: 0px 0px 4px #3bb5bc;
+} */
+
+/* .blog-navbar-add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  height: 50px;
+  width: 100px;
+  font-size: 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(80, 194, 201, 0.3);
+} */
+
+/* .logout {
+  padding: 8px 16px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+} */
+
+/* .userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #50c2c9;
+  transition: transform 0.2s ease;
+}
+
+.userAvatar:hover {
+  transform: scale(1.1);
+}
+ */

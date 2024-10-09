@@ -10,10 +10,10 @@ export const getUserLibrary = async (req, res) => {
 
         const userLibrary = {
             anime: userAnimeEntries.map(entry => {
-                console.log('Entry:', entry);
+                /* console.log('Entry:', entry);
                 console.log('isPrivate:', entry.isPrivate);
                 console.log('User ID from entry:', entry.userId.toString());
-                console.log('Current User ID:', currentUserId.toString());
+                console.log('Current User ID:', currentUserId.toString()); */
                 
                 // Verifica se animeId è definito
                 if (!entry.animeId) {
@@ -34,10 +34,10 @@ export const getUserLibrary = async (req, res) => {
             }).filter(entry => entry !== null), // Filtra i nulli
 
             manga: userMangaEntries.map(entry => {
-                console.log('Entry:', entry);
+             /*    console.log('Entry:', entry);
                 console.log('isPrivate:', entry.isPrivate);
                 console.log('User ID from entry:', entry.userId.toString());
-                console.log('Current User ID:', currentUserId.toString());
+                console.log('Current User ID:', currentUserId.toString()); */
                 
                 // Verifica se mangaId è definito
                 if (!entry.mangaId) {
@@ -66,17 +66,6 @@ export const getUserLibrary = async (req, res) => {
     }
 };
 
-
-
-
-
-
-
-
-
-
-
-// Funzione per aggiungere anime alla libreria
 // Funzione per aggiungere anime alla libreria
 export const addAnimeToLibrary = async (req, res) => {
     const userId = req.params.userId;
@@ -125,11 +114,11 @@ export const updatePrivacy = async (req, res) => {
     const itemId = req.params.itemId; // _id dell'oggetto UserLibrary
     const isPrivate = req.body.isPrivate; // Dovrebbe essere un booleano
 
-    console.log("User ID:", userId);
+  /*   console.log("User ID:", userId);
     console.log("Item ID:", itemId);
     console.log("Is Private:", isPrivate); // Dovrebbe stampare true o false
     console.log(req.body);
-
+ */
     try {
         const updatedEntry = await UserLibrary.findByIdAndUpdate(
             itemId,
@@ -148,6 +137,27 @@ export const updatePrivacy = async (req, res) => {
     }
 };
 
+// Funzione per eliminare un anime o manga dalla libreria
+export const deleteFromLibrary = async (req, res) => {
+    const userId = req.params.userId; // ID dell'utente
+    const itemId = req.params.itemId; // ID dell'elemento della UserLibrary da eliminare
+
+    try {
+        const deletedEntry = await UserLibrary.findOneAndDelete({
+            _id: itemId,
+            userId: userId
+        });
+
+        if (!deletedEntry) {
+            return res.status(404).json({ message: "Elemento non trovato" });
+        }
+
+        res.status(200).json({ message: "Elemento rimosso dalla libreria" });
+    } catch (error) {
+        console.error("Errore nell'eliminazione dell'elemento:", error);
+        res.status(500).json({ message: "Errore nell'eliminazione dell'elemento" });
+    }
+};
 
 
 

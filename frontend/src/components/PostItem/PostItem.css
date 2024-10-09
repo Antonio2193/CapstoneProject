@@ -1,59 +1,167 @@
-/* Importa i font da Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Dancing+Script&display=swap');
-
-.blog-cover {
-  width: 100%; /* L'immagine copre l'intera larghezza della card */
-  height: 400px; /* Altezza aumentata per dare maggiore visibilità all'immagine */
-  object-fit: cover; /* Copre l'area senza distorsioni */
-  object-position: center; /* Centra l'immagine */
-}
-
+/* Card del post */
 .blog-card {
-  width: 100%; /* La card occupa l'intera larghezza del suo contenitore */
-  max-width: 900px; /* Aumenta la larghezza massima della card a 900px */
-  margin: 2rem auto; /* Aggiunge margine attorno alla card */
-  padding: 20px; /* Più spazio all'interno della card */
-  border: 1px solid #e0e0e0; /* Leggera ombreggiatura o bordo */
-  border-radius: 12px; /* Bordo leggermente più arrotondato */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Ombra più pronunciata per maggiore profondità */
-  background-color: #34495e; /* Colore di sfondo della card */
-  color: #ecf0f1; /* Colore del testo chiaro per contrasto */
-  font-family: 'Righteous', cursive; /* Font per il testo della card */
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  background-color: #34495e !important;
+  color: #ecf0f1 !important;
+  font-family: 'Righteous', cursive;
 }
 
-.blog-link {
+.blog-link{
   text-decoration: none;
-  color: inherit;
 }
 
+
+/* Immagine di copertina */
+.blog-cover {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+}
+
+/* Testo del post */
 .blog-card .card-body {
-  padding: 20px; /* Più spazio attorno al testo */
+  padding: 20px;
 }
 
 .blog-card .card-title {
-  font-size: 1.5rem; /* Aumenta la dimensione del titolo */
-  font-weight: bold; /* Mantiene il titolo ben visibile */
-  font-family: 'Righteous', cursive; /* Font per il titolo */
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .blog-card .card-text {
-  font-size: 1.125rem; /* Testo leggermente più grande per migliorare la leggibilità */
-  line-height: 1.5; /* Spaziatura comoda tra le righe di testo */
-  font-family: 'Righteous', cursive; /* Font per il testo */
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: #ecf0f1;
 }
 
+/* Footer con autore e azioni */
 .blog-card .card-footer {
-  padding: 16px 20px; /* Spaziatura comoda nel footer */
+  padding: 16px 20px;
   display: flex;
-  justify-content: space-between; /* Distribuisce uniformemente i pulsanti */
+  justify-content: space-between;
   align-items: center;
-  font-family: 'Dancing Script', cursive; /* Font decorativo per il footer */
+  font-family: 'Dancing Script', cursive;
 }
 
-button {
-  display: inline-block;
-  margin: 0.5rem;
-  padding: 0.5rem 1rem;
-  background-color: #e74c3c; /* Colore per i pulsanti */
-  color: #fff; /* Testo bianco per i pulsanti */
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.icon-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.icon-button:hover {
+  color: #e74c3c;
+}
+
+/* Pulsante Like */
+.btn-like {
+  border: none !important;
+  background-color: transparent !important;
+  cursor: pointer !important;
+  margin-left: 10px !important;
+  transition: color 0.3s !important;
+}
+
+.liked-icon {
+  color: #e74c3c !important;
+}
+
+.default-icon {
+  color: #50c2c9 !important;
+}
+
+/* Contenitore dei commenti */
+.comment-container {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #ecf0f1;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Singolo commento */
+.comment-text {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: orange;
+}
+
+.no-comments{
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: orange;
+}
+
+.comment-author {
+  font-size: 0.9rem;
+  color: #9a4ef0;
+  font-weight: bold;
+}
+
+/* Pulsante per mostrare/nascondere i commenti */
+.show-comments-button {
+  border: none;
+  background: transparent;
+  color: #50c2c9;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.3s ease;
+}
+
+.show-comments-button:hover {
+  color: #3bb5bc;
+}
+
+/* Form per aggiungere un commento */
+.form-new-comment {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-new-comment input {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  color: #34495e;
+}
+
+.form-new-comment button {
+  background-color: #3498db;
+  border: none;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+.form-new-comment button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
 }

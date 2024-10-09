@@ -1,5 +1,5 @@
 import { useState, createContext, useEffect } from "react";
-import { me, loadUserLibrary, updatePrivacy } from "../data/fetch";
+import { me, loadUserLibrary, updatePrivacy, deleteFromLibrary} from "../data/fetch";
 
 export const UserContext = createContext();
 
@@ -66,11 +66,17 @@ export default function UserContextProvider({ children }) {
     }
 };
 
-
-
-
-
-
+const removeFromLibrary = async (itemId, type) => {
+  try {
+      await deleteFromLibrary(userInfo._id, itemId);
+      setMyLibrary(prevLibrary => ({
+          ...prevLibrary,
+          [type]: prevLibrary[type].filter(item => item._id !== itemId) // Filtra l'elemento rimosso
+      }));
+  } catch (error) {
+      console.error("Errore nella rimozione dell'elemento:", error);
+  }
+};
 
   // Effetto per ottenere i dati dell'utente
   useEffect(() => {
@@ -92,7 +98,8 @@ export default function UserContextProvider({ children }) {
     addAnimeToMyLibrary, // Aggiungiamo queste funzioni per aggiornarle globalmente
     addMangaToMyLibrary,
     getMyLibrary,
-    togglePrivacy
+    togglePrivacy,
+    removeFromLibrary
   };
 
   return (

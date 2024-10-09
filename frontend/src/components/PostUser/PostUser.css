@@ -1,5 +1,37 @@
+/* Stile per l'avatar dell'autore */
 .blog-author {
-    width: 40px;
-    height: 40px;
-  }
-  
+  width: 50px;
+  height: 50px;
+  border: 2px solid #50c2c9; /* Bordo azzurro neon per tema anime */
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra per profondità */
+  transition: transform 0.2s ease;
+}
+
+.blog-author:hover {
+  transform: scale(1.1); /* Leggera espansione al passaggio */
+}
+
+/* Contenitore per l'autore */
+.post-user-container {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1); /* Sfondo trasparente */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Testo dell'autore */
+.post-user-container div {
+  color: #ecf0f1;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.post-user-container h6 {
+  color: #ff77a9; /* Colore vivace per il nome */
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}

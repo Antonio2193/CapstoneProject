@@ -3,42 +3,39 @@ import User from "../models/userSchema.js";
 
 // Funzione per ottenere i post
 export const getPosts = async (req, res) => {
+    const userId = req.loggedUser._id; // Ottieni l'ID dell'utente autenticato
     const page = req.query.page || 1;
     let perPage = req.query.perPage || 8;
     perPage = perPage > 10 ? 10 : perPage; // Limita a un massimo di 10 post per pagina
 
     try {
-        // Filtro opzionale per il titolo
-        const filter = req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {};
-
-        // Trova i post, ordina per data di creazione (dal più recente al meno recente) e applica paginazione
-        const posts = await Post.find(filter)
-            .collation({ locale: 'it' }) // Ignora maiuscole e minuscole
+        const posts = await Post.find()
             .sort({ createdAt: -1 }) // Ordina per data, dal più recente
             .skip((page - 1) * perPage)
             .limit(perPage)
-            .populate({
-                path: 'comments',
-                populate: { path: 'author', select: 'name' } // Popola anche il campo 'author' dei commenti
-            })
+            .populate('comments') // Popola anche i commenti
             .exec();
 
-        // Conta il totale dei post
-        const totalResults = await Post.countDocuments(filter);
-        const totalPages = Math.ceil(totalResults / perPage);
+        // Aggiungi lo stato del "like" per ogni post
+        const postsWithLikes = posts.map(post => {
+            return {
+                ...post._doc,
+                hasLiked: post.likes.userIds.includes(userId) // Aggiungi stato del like
+            };
+        });
 
-        // Risposta con i dati dei post, numero di pagine, ecc.
         res.send({
-            dati: posts,
+            dati: postsWithLikes,
             page,
-            totalPages,
-            totalResults,
+            totalPages: Math.ceil(posts.length / perPage),
+            totalResults: posts.length
         });
     } catch (error) {
         console.error('Error fetching posts:', error);
         res.status(404).send({ message: "Posts not found" });
     }
 };
+
 
 // Funzione per creare un post
 export const createPost = async (req, res) => {
@@ -116,18 +113,24 @@ export const likePost = async (req, res) => {
         }
 
         // Controlla se l'utente ha già messo like
-        if (post.likes.userIds.includes(userId)) {
-            return res.status(400).json({ message: 'Hai già messo like a questo post.' });
+        const hasLiked = post.likes.userIds.includes(userId);
+        
+        // Se l'utente ha già messo like, lo rimuoviamo
+        if (hasLiked) {
+            post.likes.userIds = post.likes.userIds.filter(id => !id.equals(userId));
+            post.likes.count -= 1; // Decrementa il conteggio dei like
+        } else {
+            // Aggiungi l'ID utente all'array dei like
+            post.likes.userIds.push(userId);
+            post.likes.count += 1; // Incrementa il conteggio dei like
         }
 
-        // Aggiungi l'ID utente all'array dei like
-        post.likes.userIds.push(userId);
-        post.likes.count += 1; // Incrementa il conteggio dei like
         await post.save();
 
-        return res.status(200).json(post); // Restituisci il post aggiornato
+        return res.status(200).json({ post, hasLiked: !hasLiked }); // Restituisci il post aggiornato e lo stato del like
     } catch (error) {
         console.error('Error liking post:', error);
         return res.status(500).json({ message: 'Server error.' });
     }
 };
+

@@ -174,69 +174,66 @@ const PostItem = (props) => {
       <Link to={`/post/${_id}`} className="blog-link">
         <Card.Img variant="top" src={cover} className="blog-cover" />
         <Card.Body>
-          <Card.Title>{title}</Card.Title>
-          <Card.Text>{content}</Card.Text>
+          <Card.Text className="blog-card-text">{content}</Card.Text>
         </Card.Body>
       </Link>
-      <Card.Footer>
-    <PostUser name={authorDetails.name} avatar={authorDetails.avatar} />
-    {userInfo._id === author && (
-        <>
-            <Button variant="primary" className="ms-2" onClick={handleEditPost}>
-                <i className="fas fa-edit"></i> {/* Icona di modifica */}
+      <Card.Footer className="blog-card-footer">
+        <PostUser name={authorDetails.name} avatar={authorDetails.avatar} />
+        {userInfo?._id === author && (
+          <div className="button-container">
+            <Button variant="primary" className="ms-2 icon-button" onClick={handleEditPost}>
+              <i className="fas fa-edit"></i> 
             </Button>
-            <Button variant="warning" onClick={handleDelete}>
-                <i className="fas fa-trash"></i> {/* Icona di eliminazione */}
+            <Button variant="warning" onClick={handleDelete} className="icon-button">
+              <i className="fas fa-trash"></i> 
             </Button>
-        </>
-    )}
-    <div className="d-flex align-items-center mt-2">
-        <button
+          </div>
+        )}
+        <div className="like-container">
+          <button
             onClick={handleLikePost}
-            className={`btn btn-outline-primary me-2 ${
-                liked ? "text-primary" : ""
-            }`}
+            className={`btn btn-like icon-button ${liked ? "liked-icon" : "default-icon"}`}
             disabled={liked}
-        >
-            <i className={`fas fa-thumbs-up`}></i> Like
-        </button>
-        <span>{likes.count || 0} likes</span>
-    </div>
-</Card.Footer>
+          >
+            <i className="fas fa-thumbs-up"></i>
+          </button>
+          <span>{likes.count || 0} likes</span>
+        </div>
+      </Card.Footer>
 
       {/* Mostra i commenti */}
-      <Card.Body>
+      <Card.Body className="comment-section">
         <h5>Commenti:</h5>
         {comments.length > 0 ? (
           <>
             {comments
               .slice(0, showAllComments ? comments.length : 3)
               .map((comment) => (
-                <div key={comment._id}>
-                  <p>
+                <div key={comment._id} className="comment-container">
+                  <p className="comment-text">
                     {comment.content} -{" "}
-                    {comment.author ? comment.author.name : "Anonimo"}
+                    <span className="comment-author">{comment.author ? comment.author.name : "Anonimo"}</span>
                   </p>
                 </div>
               ))}
-           {comments.length > 3 && (
-    <button
-        onClick={() => setShowAllComments(!showAllComments)}
-        className="btn btn-link"
-    >
-        <i className={`fas fa-chevron-${showAllComments ? "up" : "down"}`}></i>
-        {showAllComments ? " Nascondi commenti" : " Mostra tutti i commenti"}
-    </button>
-)}
+            {comments.length > 3 && (
+              <button
+                onClick={() => setShowAllComments(!showAllComments)}
+                className="show-comments-button"
+              >
+                <i className={`fas fa-chevron-${showAllComments ? "up" : "down"}`}></i>
+                {showAllComments ? " Nascondi commenti" : " Mostra tutti i commenti"}
+              </button>
+            )}
           </>
         ) : (
-          <p>Non ci sono commenti ancora.</p>
+          <p className="no-comments">Non ci sono commenti.</p>
         )}
       </Card.Body>
 
       {/* Form per il nuovo commento */}
-      <Card.Body>
-        <Form onSubmit={handleNewComment}>
+      <Card.Body className="new-comment-form">
+        <Form onSubmit={handleNewComment} className="form-new-comment">
           <Form.Group controlId="formNewComment">
             <Form.Control
               type="text"
@@ -244,22 +241,23 @@ const PostItem = (props) => {
               value={newCommentText}
               onChange={(e) => setNewCommentText(e.target.value)}
               required
+              className="comment-input"
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" className="submit-comment">
             Invia
           </Button>
         </Form>
       </Card.Body>
 
       {/* Modale per l'edit del post */}
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} className="edit-post-modal">
         <Modal.Header closeButton>
           <Modal.Title>Edit Post</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formCategory" className="mt-3">
+            <Form.Group controlId="formCategory" className="mt-3 category-select">
               <Form.Label>Categoria</Form.Label>
               <Form.Control
                 as="select"
@@ -271,7 +269,7 @@ const PostItem = (props) => {
                 <option value="Manga">Manga</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="formContent" className="mt-3">
+            <Form.Group controlId="formContent" className="mt-3 content-textarea">
               <Form.Label>Contenuto</Form.Label>
               <Form.Control
                 as="textarea"
@@ -284,10 +282,10 @@ const PostItem = (props) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose} className="close-button">
             Chiudi
           </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
+          <Button variant="primary" onClick={handleSaveChanges} className="save-changes-button">
             Salva Cambiamenti
           </Button>
         </Modal.Footer>

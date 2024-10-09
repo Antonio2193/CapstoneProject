@@ -133,6 +133,9 @@ const Library = () => {
 
   // Verifica se un elemento è già in libreria
   const isInLibrary = (id, type) => {
+    console.log(id)
+    console.log(myLibrary[type])
+    console.log(myLibrary[type] && myLibrary[type].some((item) => item._id === id));
     return myLibrary[type] && myLibrary[type].some((item) => item._id === id);
   };
 
@@ -315,7 +318,7 @@ const Library = () => {
         ) : Array.isArray(filteredAnime) && filteredAnime.length > 0 ? (
           <div className="grid">
             {filteredAnime.map((item) => (
-              <div className="card" key={item._id}>
+              <div className="library-card" key={item._id}>
                 <img src={item.cover} alt={item.title} />
                 <h3>{item.title}</h3>
                 <p>
@@ -347,7 +350,7 @@ const Library = () => {
         )}
       </section>
 
-      <section>
+      <section className="manga-section">
         <h2>Manga</h2>
         {loadingManga ? (
           <p>Caricamento manga...</p>
@@ -356,7 +359,7 @@ const Library = () => {
         ) : Array.isArray(filteredManga) && filteredManga.length > 0 ? (
           <div className="grid">
             {filteredManga.map((item) => (
-              <div className="card" key={item._id}>
+              <div className="library-card" key={item._id}>
                 <img src={item.cover} alt={item.title} />
                 <h3>{item.title}</h3>
                 <p>

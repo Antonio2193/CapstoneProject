@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './SearchUser.css';
 
 const SearchUser = () => {
     const [query, setQuery] = useState('');
@@ -39,29 +40,30 @@ const SearchUser = () => {
     };
 
     return (
-        <div>
-            <h2>Cerca Utenti</h2>
-            <form onSubmit={handleSearch}>
+        <div className="search-user-container">
+            <h2 className="search-title">Cerca Utenti</h2>
+            <form className="search-form" onSubmit={handleSearch}>
                 <input
                     type="text"
+                    className="search-input"
                     placeholder="Cerca per nome o email..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                 />
-                <button type="submit" disabled={loading}>
+                <button type="submit" className="search-button" disabled={loading}>
                     {loading ? 'Cercando...' : 'Cerca'}
                 </button>
             </form>
 
-            {error && <p>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
 
             {users.length > 0 && (
-                <ul>
+                <ul className="user-list">
                     {users.map(user => (
-                        <li key={user._id}>
-                            <img src={user.avatar || 'default-avatar.png'} alt={`${user.name} avatar`} width="40" />
-                            <span>{user.name} ({user.email})</span>
-                            <button onClick={() => handleViewLibrary(user._id)}>Visualizza Libreria</button>
+                        <li key={user._id} className="user-item">
+                            <img src={user.avatar || 'default-avatar.png'} alt={`${user.name} avatar`} className="user-avatar" />
+                            <span className="user-info">{user.name} ({user.email})</span>
+                            <button onClick={() => handleViewLibrary(user._id)} className="view-library-button">Visualizza Libreria</button>
                         </li>
                     ))}
                 </ul>

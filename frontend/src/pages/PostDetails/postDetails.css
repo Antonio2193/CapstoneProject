@@ -1,42 +1,130 @@
+/* Immagine di copertina del post */
 .blog-details-cover {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 50px;
-    max-height: 80vh;
-    object-fit: cover;
-    object-position: 0% 0%;
-    margin-top: 50px;
-  }
-  
-  .blog-details-root {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    margin-top: 100px;
-  }
-  
-  .blog-details-title {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    font-weight: bold;
-  }
-  
-  .blog-details-container {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .blog-details-author {
-    width: 300px;
-  }
-  
-  .blog-details-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .rdw-editor-main {
-    border: 1px solid grey
-  }
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  max-height: 80vh;
+  object-fit: cover;
+  object-position: 0% 0%;
+  margin-top: 100px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Aggiunta ombra */
+}
+
+/* Contenitore principale del post */
+.blog-details-root {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  background: linear-gradient(to bottom right, #9a4ef0, #50c2c9); /* Gradiente di sfondo */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Titolo del post */
+.blog-details-title {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-weight: bold;
+  font-size: 2.5rem; /* Dimensione aumentata */
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Ombra per miglior contrasto */
+}
+
+/* Contenitore dell'autore e data */
+.blog-details-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  color: #ecf0f1; /* Colore chiaro per il testo */
+}
+
+.blog-details-author {
+  width: 300px;
+}
+
+.blog-details-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ecf0f1;
+}
+
+/* Commenti */
+.mt-5 {
+  color: #ffffff;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  font-size: 1.3rem;
+}
+
+/* Contenitore di ogni commento */
+.comment{
+  background-color: rgba(255, 255, 255, 0.8); /* Sfondo semi-trasparente */
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Testo del commento */
+.mt-2 {
+  font-size: 1rem;
+  color: #34495e;
+  padding: 10px;
+}
+
+/* Icone modifica e cancellazione del commento */
+.fa-pen,
+.fa-trash {
+  color: #9a4ef0;
+  transition: color 0.3s ease;
+}
+
+.fa-pen:hover,
+.fa-trash:hover {
+  color: #50c2c9;
+}
+
+/* Pulsanti */
+button,
+.btn-primary {
+  background-color: #3498db; /* Azzurro */
+  border: none;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+button:hover,
+.btn-primary:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+button:active,
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+/* Modal */
+.modal-content {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  border-radius: 10px;
+}
+
+.modal-header,
+.modal-footer {
+  border: none;
+}
