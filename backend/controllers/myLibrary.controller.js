@@ -24,7 +24,8 @@ export const getUserLibrary = async (req, res) => {
                 }
                 return {
                     ...entry.animeId._doc,
-                    _id: entry._id, // id dell'UserLibrary entry
+                    _id: entry.animeId._id, // id dell'UserLibrary entry
+                    originalID: entry._id,
                     isPrivate: entry.isPrivate,
                 };
             }).filter(entry => entry !== null), // Filtra i nulli
@@ -44,7 +45,8 @@ export const getUserLibrary = async (req, res) => {
                 }
                 return {
                     ...entry.mangaId._doc,
-                    _id: entry._id, // id dell'UserLibrary entry
+                    _id: entry.mangaId._id, // id dell'UserLibrary entry
+                    originalID: entry._id,
                     isPrivate: entry.isPrivate,
                 };
             }).filter(entry => entry !== null), // Filtra i nulli

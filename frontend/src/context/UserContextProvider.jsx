@@ -58,7 +58,7 @@ export default function UserContextProvider({ children }) {
         setMyLibrary(prevLibrary => ({
             ...prevLibrary,
             [type]: prevLibrary[type].map(item => 
-                item._id === itemId ? { ...item, isPrivate: updatedItem.isPrivate } : item
+                item.originalID === itemId ? { ...item, isPrivate: updatedItem.isPrivate } : item
             )
         }));
     } catch (error) {
@@ -71,7 +71,7 @@ const removeFromLibrary = async (itemId, type) => {
       await deleteFromLibrary(userInfo._id, itemId);
       setMyLibrary(prevLibrary => ({
           ...prevLibrary,
-          [type]: prevLibrary[type].filter(item => item._id !== itemId) // Filtra l'elemento rimosso
+          [type]: prevLibrary[type].filter(item => item.originalID !== itemId) // Filtra l'elemento rimosso
       }));
   } catch (error) {
       console.error("Errore nella rimozione dell'elemento:", error);

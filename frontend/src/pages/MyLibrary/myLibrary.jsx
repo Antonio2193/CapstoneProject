@@ -23,13 +23,13 @@ const MyLibrary = () => {
               <p><strong>End Date:</strong> {anime.endDate ? new Date(anime.endDate).toLocaleDateString() : "Continuing"}</p>
               
               {/* Bottone Privacy */}
-              <button className="privacy-button" onClick={() => togglePrivacy(anime._id, "anime", !anime.isPrivate)}>
+              <button className="privacy-button" onClick={() => togglePrivacy(anime.originalID, "anime", !anime.isPrivate)}>
                 <i className={`fas ${anime.isPrivate ? 'fa-eye-slash' : 'fa-eye'} fa-icon`}></i>
                 {anime.isPrivate ? "Privato" : "Pubblico"}
               </button>
               
               {/* Bottone Elimina */}
-              <button className="delete-button" onClick={() => removeFromLibrary(anime._id, 'anime')}>
+              <button className="delete-button" onClick={() => removeFromLibrary(anime.originalID, 'anime')}>
                 <i className="fas fa-trash-alt fa-icon"></i> Elimina
               </button>
             </div>
@@ -53,13 +53,13 @@ const MyLibrary = () => {
               <p><strong>End Date:</strong> {manga.endDate ? new Date(manga.endDate).toLocaleDateString() : "Continuing"}</p>
 
               {/* Bottone Privacy */}
-              <button className="privacy-button" onClick={() => togglePrivacy(manga._id, "manga", !manga.isPrivate)}>
+              <button className="privacy-button" onClick={() => togglePrivacy(manga.originalID, "manga", !manga.isPrivate)}>
                 <i className={`fas ${manga.isPrivate ? 'fa-eye-slash' : 'fa-eye'} fa-icon`}></i>
                 {manga.isPrivate ? "Privato" : "Pubblico"}
               </button>
               
               {/* Bottone Elimina */}
-              <button className="delete-button" onClick={() => removeFromLibrary(manga._id, 'manga')}>
+              <button className="delete-button" onClick={() => removeFromLibrary(manga.originalID, 'manga')}>
                 <i className="fas fa-trash-alt fa-icon"></i> Elimina
               </button>
             </div>

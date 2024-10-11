@@ -144,6 +144,8 @@ const Library = () => {
 
   // Verifica se un elemento è già in libreria
   const isInLibrary = (id, type) => {
+    console.log(myLibrary[type]);
+    console.log(id)
     return myLibrary[type] && myLibrary[type].some((item) => item._id === id);
   };
 
