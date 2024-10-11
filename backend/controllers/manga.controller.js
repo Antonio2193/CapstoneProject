@@ -43,7 +43,7 @@ export const createManga = async (req, res) => {
         } else if (req.file) {
             coverPath = req.file.path;
         } else {
-            coverPath = 'https://via.placeholder.com/150'; // Immagine di fallback
+            coverPath = 'https://via.placeholder.com/150';
         }
 
         const manga = new Manga({ ...req.body, cover: coverPath });

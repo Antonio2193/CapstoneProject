@@ -62,7 +62,6 @@ const NavBar = (props) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <div className="d-flex align-items-center ms-auto">
-            {/* Link alla libreria vicino al logo */}
             {token &&( <Link to="/library" className="navbar-link ms-3">
               Library
             </Link>)}

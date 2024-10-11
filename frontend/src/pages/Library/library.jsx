@@ -42,6 +42,17 @@ const Library = () => {
     type: "anime", // Default 'anime'
   });
 
+  // Stato per il messaggio popup
+  const [popupMessage, setPopupMessage] = useState("");
+
+  // Funzione per mostrare il messaggio
+  const showPopup = (message) => {
+    setPopupMessage(message);
+    setTimeout(() => {
+      setPopupMessage(""); // Nascondi il messaggio dopo 3 secondi
+    }, 3000);
+  };
+
   useEffect(() => {
     const fetchAnime = async () => {
       setLoadingAnime(true);
@@ -75,13 +86,13 @@ const Library = () => {
 
   const handleAddAnime = async (animeId) => {
     if (!userInfo) {
-      console.error("User not logged in or userInfo not available.");
+      console.error("Utente non autenticato.");
       return;
     }
 
     try {
       const addedAnime = await addAnimeToLibrary(userInfo._id, animeId);
-      alert("Anime aggiunto alla libreria");
+      showPopup("Anime aggiunto alla libreria!"); // Mostra il messaggio
 
       // Aggiorna la libreria locale
       setMyLibrary((prevLibrary) => ({
@@ -104,13 +115,13 @@ const Library = () => {
 
   const handleAddManga = async (mangaId) => {
     if (!userInfo) {
-      console.error("User not logged in or userInfo not available.");
+      console.error("Utente non autenticato.");
       return;
     }
 
     try {
       const addedManga = await addMangaToLibrary(userInfo._id, mangaId);
-      alert("Manga aggiunto alla libreria");
+      showPopup("Manga aggiunto alla libreria!"); // Mostra il messaggio
 
       // Aggiorna la libreria locale
       setMyLibrary((prevLibrary) => ({
@@ -133,9 +144,6 @@ const Library = () => {
 
   // Verifica se un elemento è già in libreria
   const isInLibrary = (id, type) => {
-    console.log(id)
-    console.log(myLibrary[type])
-    console.log(myLibrary[type] && myLibrary[type].some((item) => item._id === id));
     return myLibrary[type] && myLibrary[type].some((item) => item._id === id);
   };
 
@@ -150,31 +158,59 @@ const Library = () => {
   const handleSubmitNewItem = async (e) => {
     e.preventDefault();
     try {
-      if (newItem.type === "anime") {
-        await createAnime({
-          title: newItem.title,
-          cover: newItem.cover,
-          episodes: newItem.episodesOrChapters,
-          producer: newItem.producerOrAuthor,
-          startDate: newItem.startDate,
-          endDate: newItem.endDate,
+        let newLibraryItem;
+
+        // Crea l'elemento in base al tipo selezionato
+        if (newItem.type === "anime") {
+            newLibraryItem = await createAnime({
+                title: newItem.title,
+                cover: newItem.cover,
+                episodes: newItem.episodesOrChapters,
+                producer: newItem.producerOrAuthor,
+                startDate: newItem.startDate,
+                endDate: newItem.endDate,
+            });
+
+            // Aggiorna solo la libreria generale (Library) con l'elemento appena creato
+            setAnime((prevAnime) => [...prevAnime, newLibraryItem]);
+
+        } else {
+            newLibraryItem = await createManga({
+                title: newItem.title,
+                cover: newItem.cover,
+                chapters: newItem.episodesOrChapters,
+                volumes: newItem.volumes,
+                author: newItem.producerOrAuthor,
+                startDate: newItem.startDate,
+                endDate: newItem.endDate,
+            });
+
+            // Aggiorna solo la libreria generale (Library) con l'elemento appena creato
+            setManga((prevManga) => [...prevManga, newLibraryItem]);
+        }
+
+        // Mostra il messaggio di successo
+        showPopup("Elemento aggiunto con successo!");
+
+        // Chiudi il form di aggiunta
+        setShowAddForm(false);
+
+        // Pulisci i dati del nuovo elemento
+        setNewItem({
+            title: "",
+            cover: "",
+            episodesOrChapters: "",
+            producerOrAuthor: "",
+            volumes: "",
+            startDate: "",
+            endDate: "",
+            type: "anime",
         });
-      } else {
-        await createManga({
-          title: newItem.title,
-          cover: newItem.cover,
-          chapters: newItem.episodesOrChapters,
-          volumes: newItem.volumes,
-          author: newItem.producerOrAuthor,
-          startDate: newItem.startDate,
-          endDate: newItem.endDate,
-        });
-      }
-      alert("Elemento aggiunto con successo!");
     } catch (error) {
-      console.error("Errore nell'aggiunta del nuovo elemento:", error.message);
+        console.error("Errore nell'aggiunta del nuovo elemento:", error.message);
     }
-  };
+};
+
 
   // Filtra gli anime e manga in base al termine di ricerca
   const filteredAnime = filterItems(anime, searchTerm);
@@ -188,7 +224,14 @@ const Library = () => {
     <div className="library">
       <h1>Libreria</h1>
 
-      {/* Search bar di Bootstrap */}
+      {/* Messaggio Popup */}
+      {popupMessage && (
+        <div className="popup-message">
+          {popupMessage}
+        </div>
+      )}
+
+      {/* Search bar */}
       <Form.Group controlId="searchBar" className="mb-4 search-input">
         <Form.Control
           type="text"
@@ -210,7 +253,7 @@ const Library = () => {
       {showAddForm && (
         <Form onSubmit={handleSubmitNewItem}>
           <Form.Group controlId="formTitle" className="mb-3">
-            <Form.Label>Title</Form.Label>
+            <Form.Label className="add-M-A add-M-A-title">Title</Form.Label>
             <Form.Control
               type="text"
               value={newItem.title}
@@ -222,7 +265,7 @@ const Library = () => {
           </Form.Group>
 
           <Form.Group controlId="formCover" className="mb-3">
-            <Form.Label>Cover URL</Form.Label>
+            <Form.Label className="add-M-A">Cover URL</Form.Label>
             <Form.Control
               type="text"
               value={newItem.cover}
@@ -233,7 +276,7 @@ const Library = () => {
           </Form.Group>
 
           <Form.Group controlId="formEpisodesOrChapters" className="mb-3">
-            <Form.Label>Episodes/Chapters</Form.Label>
+            <Form.Label className="add-M-A">Episodes/Chapters</Form.Label>
             <Form.Control
               type="text"
               value={newItem.episodesOrChapters}
@@ -246,7 +289,7 @@ const Library = () => {
 
           {newItem.type === "manga" && (
             <Form.Group controlId="formVolumes" className="mb-3">
-              <Form.Label>Volumes</Form.Label>
+              <Form.Label className="add-M-A">Volumes</Form.Label>
               <Form.Control
                 type="text"
                 value={newItem.volumes}
@@ -259,7 +302,7 @@ const Library = () => {
           )}
 
           <Form.Group controlId="formProducerOrAuthor" className="mb-3">
-            <Form.Label>Producer/Author</Form.Label>
+            <Form.Label className="add-M-A">Producer/Author</Form.Label>
             <Form.Control
               type="text"
               value={newItem.producerOrAuthor}
@@ -270,7 +313,7 @@ const Library = () => {
           </Form.Group>
 
           <Form.Group controlId="formStartDate" className="mb-3">
-            <Form.Label>Start Date</Form.Label>
+            <Form.Label className="add-M-A">Start Date</Form.Label>
             <Form.Control
               type="date"
               value={newItem.startDate}
@@ -281,7 +324,7 @@ const Library = () => {
           </Form.Group>
 
           <Form.Group controlId="formEndDate" className="mb-3">
-            <Form.Label>End Date</Form.Label>
+            <Form.Label className="add-M-A">End Date</Form.Label>
             <Form.Control
               type="date"
               value={newItem.endDate}
@@ -292,7 +335,7 @@ const Library = () => {
           </Form.Group>
 
           <Form.Group controlId="formType" className="mb-3">
-            <Form.Label>Tipo</Form.Label>
+            <Form.Label className="add-M-A">Tipo</Form.Label>
             <Form.Control
               as="select"
               value={newItem.type}

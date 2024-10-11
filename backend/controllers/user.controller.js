@@ -83,58 +83,5 @@ export const patchUser = async (req, res) => {
     }
 }
 
-/* export const addAnimeToLibrary = async (req, res) => {
-    const { userId } = req.params; // Assicurati di passare l'ID dell'utente
-    const { animeId } = req.body; // Assicurati di passare l'ID dell'anime
 
-    try {
-        const user = await User.findById(userId);
-        if (!user) return res.status(404).send({ message: "User not found" });
 
-        if (!user.myAnimeLibrary.includes(animeId)) {
-            user.myAnimeLibrary.push(animeId);
-            await user.save();
-            res.status(200).send(user);
-        } else {
-            res.status(400).send({ message: "Anime already in library" });
-        }
-    } catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-};
-
-export const addMangaToLibrary = async (req, res) => {
-    const { userId } = req.params; // Assicurati di passare l'ID dell'utente
-    const { mangaId } = req.body; // Assicurati di passare l'ID del manga
-
-    try {
-        const user = await User.findById(userId);
-        if (!user) return res.status(404).send({ message: "User not found" });
-
-        if (!user.myMangaLibrary.includes(mangaId)) {
-            user.myMangaLibrary.push(mangaId);
-            await user.save();
-            res.status(200).send(user);
-        } else {
-            res.status(400).send({ message: "Manga already in library" });
-        }
-    } catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-}; */
-
-/* export const getUserLibrary = async (req, res) => {
-    const { userId } = req.params; // Assicurati di passare l'ID dell'utente
-
-    try {
-        const user = await User.findById(userId).populate('myAnimeLibrary').populate('myMangaLibrary');
-        if (!user) return res.status(404).send({ message: "User not found" });
-
-        res.status(200).send({
-            anime: user.myAnimeLibrary,
-            manga: user.myMangaLibrary
-        });
-    } catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-}; */

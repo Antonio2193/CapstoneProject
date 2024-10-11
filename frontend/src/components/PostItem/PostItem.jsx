@@ -10,7 +10,7 @@ import {
   newComment,
   loadComments,
   likePost,
-} from "../../data/fetch"; // Aggiungi likePost
+} from "../../data/fetch";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const PostItem = (props) => {
@@ -25,7 +25,7 @@ const PostItem = (props) => {
     aggiornaPostList,
     likes,
     onLike,
-    liked, // Nuovo props per sapere se il post è stato messo like
+    liked,
   } = props;
 
   const { token, userInfo } = useContext(UserContext);
@@ -53,7 +53,7 @@ const PostItem = (props) => {
     fetchComments();
   }, [_id, aggiornaPostList]);
 
-  // Effetto per caricare i dettagli dell'autore
+  // Funzione per caricare i dettagli dell'autore
   useEffect(() => {
     const fetchAuthorDetails = async () => {
       try {

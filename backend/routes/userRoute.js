@@ -7,7 +7,6 @@ import User from '../models/userSchema.js';
 const router = express.Router();
 
 // Rotta per cercare utenti per nome o email
-// Rotta per cercare utenti per nome o email
 router.get('/search', async (req, res) => {
     const { query } = req.query; // Otteniamo la query di ricerca dal parametro 'query'
 
@@ -31,7 +30,7 @@ router.get('/search', async (req, res) => {
 });
 
 
-router.get('/', getUsers) // /api/v1/users
+router.get('/', getUsers)
 
 router.post('/', uploadCloudinary.single('avatar'), createUser)
 
@@ -58,7 +57,7 @@ router.get('/search', async (req, res) => {
                 { name: { $regex: query, $options: 'i' } }, // Ricerca per nome
                 { email: { $regex: query, $options: 'i' } } // Ricerca per email
             ]
-        }).select('_id name email avatar'); // Restituiamo solo campi rilevanti (puoi aggiungere campi se necessario)
+        }).select('_id name email avatar'); // Restituiamo solo campi rilevanti
         
         res.status(200).json(users);
     } catch (error) {

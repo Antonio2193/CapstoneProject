@@ -53,7 +53,7 @@ export const createPost = async (req, res) => {
 export const getSinglePost = async (req, res) => {
     const { id } = req.params;
     try {
-        const post = await Post.findById(id)/* .populate('user') */;
+        const post = await Post.findById(id);
         res.status(200).send(post);
     } catch (error) {
         res.status(404).send({ message: "Post not found" });

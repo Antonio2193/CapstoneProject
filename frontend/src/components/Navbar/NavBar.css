@@ -14,14 +14,6 @@
   font-family: 'Righteous', cursive;
   border-bottom: 2px solid rgba(80, 194, 201, 0.2);
 }
-/* .blog-navbar {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background: linear-gradient(to bottom right, #7e3aba, #3d9ca8);
-  color: #ecf0f1;
-  font-family: 'Righteous', cursive;
-  border-bottom: 2px solid rgba(80, 194, 201, 0.2);
-} */
 
 /* Link nella Navbar */
 .navbar-link {
@@ -93,57 +85,3 @@
 .userAvatar:hover {
   transform: scale(1.1); /* Leggera espansione al passaggio */
 }
-
-
-/* .navbar-link {
-  color: #50c2c9;
-  font-weight: bold;
-  padding: 0 12px;
-  font-family: 'Righteous', cursive;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-.navbar-link:hover {
-  color: #3bb5bc;
-  text-shadow: 0px 0px 4px #3bb5bc;
-} */
-
-/* .blog-navbar-add-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  height: 50px;
-  width: 100px;
-  font-size: 1rem;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(80, 194, 201, 0.3);
-} */
-
-/* .logout {
-  padding: 8px 16px;
-  background-color: #e74c3c;
-  color: white;
-  border-radius: 12px;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
-} */
-
-/* .userAvatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid #50c2c9;
-  transition: transform 0.2s ease;
-}
-
-.userAvatar:hover {
-  transform: scale(1.1);
-}
- */

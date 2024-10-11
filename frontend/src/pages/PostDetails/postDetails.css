@@ -7,7 +7,7 @@
   object-fit: cover;
   object-position: 0% 0%;
   margin-top: 100px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Aggiunta ombra */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* ombra */
 }
 
 /* Contenitore principale del post */
@@ -26,7 +26,7 @@
   margin-top: 50px;
   margin-bottom: 50px;
   font-weight: bold;
-  font-size: 2.5rem; /* Dimensione aumentata */
+  font-size: 2.5rem;
   color: #ffffff;
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Ombra per miglior contrasto */
@@ -38,7 +38,7 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  color: #ecf0f1; /* Colore chiaro per il testo */
+  color: #ecf0f1;
 }
 
 .blog-details-author {
@@ -90,7 +90,7 @@
 /* Pulsanti */
 button,
 .btn-primary {
-  background-color: #3498db; /* Azzurro */
+  background-color: #3498db;
   border: none;
   color: #ffffff;
   border-radius: 8px;

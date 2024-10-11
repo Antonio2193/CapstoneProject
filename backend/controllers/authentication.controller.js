@@ -24,7 +24,7 @@ export const register = async (req, res) => {
 
         // Invia email di benvenuto
         await transport.sendMail({
-            from: 'noreply@yourdomain.com', // indirizzo del mittente
+            from: 'noreply@otakuworld.com', // indirizzo del mittente
             to: newUser.email, // indirizzo email del destinatario
             subject: "Benvenuto! Registrazione completata", // Oggetto della mail
             text: `Ciao ${newUser.name}, grazie per esserti registrato!`, // Corpo della mail in testo semplice

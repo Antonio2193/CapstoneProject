@@ -4,7 +4,7 @@ import "./PostUser.css";
 import UserContextProvider from "../../context/UserContextProvider";
 
 const PostUser = props => {
-  const { name, avatar } = props; // Assicurati di destrutturare le props correttamente
+  const { name, avatar } = props; // destrutturazione delle props
   return (
     <Row>
       <Col xs={"auto"} className="pe-0">

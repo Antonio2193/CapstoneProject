@@ -1,3 +1,4 @@
+// funzione che restituisce l'utente
 export const me = async () => {
     const res = await fetch('http://localhost:5000/api/v1/auth/me',
         {
@@ -13,6 +14,7 @@ export const me = async () => {
     return data;
 }
 
+// funzione che registra un nuovo utente
 export const register = async (regFormValue, avatar) => {
     const formData = new FormData()
     formData.append('avatar', avatar)
@@ -34,6 +36,7 @@ export const register = async (regFormValue, avatar) => {
 
 }
 
+// funzione che effettua il login
 export const login = async (formValue) => {
     try {
         const res = await fetch('http://localhost:5000/api/v1/auth/login', {
@@ -55,7 +58,7 @@ export const login = async (formValue) => {
     }
 }
 
-
+// funzione che restituisce i post
 export const loadPosts = async (search, page = 1, perPage = 9) => {
     const urlBase = 'http://localhost:5000/api/v1/blogPosts';
     const searchParam = search ? `&title=${search}` : '';
@@ -72,7 +75,7 @@ export const loadPosts = async (search, page = 1, perPage = 9) => {
     return data;
   };
   
-
+  // funzione che restituisce i commenti
   export const loadComments = async (id) => {
     const res = await fetch(`http://localhost:5000/api/v1/blogPosts/${id}/comments`, {
         headers: {
@@ -83,6 +86,7 @@ export const loadPosts = async (search, page = 1, perPage = 9) => {
     return data;
 }
 
+// funzione che crea un nuovo post
 export const newPost = async (formValue, cover) => {
     const formData = new FormData()
     formData.append('cover', cover)
@@ -101,8 +105,8 @@ export const newPost = async (formValue, cover) => {
     return data
 }
 
+// funzione che carica un post specifico presente
 export const loadPost = async (paramsId) => {
-    // carica un post specifico presente nel blog 
     const res = await fetch('http://localhost:5000/api/v1/blogPosts/' + paramsId, {
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -112,6 +116,7 @@ export const loadPost = async (paramsId) => {
     return data
 }
 
+// funziona che aggiunge un commento
 export const newComment = async (id, formValue) => {
     const res = await fetch(`http://localhost:5000/api/v1/blogPosts/${id}/comments`, {
         headers: {
@@ -119,7 +124,7 @@ export const newComment = async (id, formValue) => {
             "Content-Type": "application/json"
         },
         method: "POST",
-        body: JSON.stringify(formValue) // Assicurati che formValue abbia i campi corretti
+        body: JSON.stringify(formValue)
     });
     
     if (!res.ok) {
@@ -131,6 +136,7 @@ export const newComment = async (id, formValue) => {
     return data;
 }
 
+// funzione che aggiorna un commento
 export const updateComment = async (blogpostId, commentId, updatedCommentData) => {
     try {
         const response = await fetch(`http://localhost:5000/api/v1/blogPosts/${blogpostId}/comment/${commentId}`, {
@@ -154,17 +160,18 @@ export const updateComment = async (blogpostId, commentId, updatedCommentData) =
     }
 };
 
+// funzione che cancella un commento
 export const deleteComment = async (blogpostId, commentId) => {
     const response = await fetch(`http://localhost:5000/api/v1/blogPosts/${blogpostId}/comment/${commentId}`, {
         method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'
-            // Assicurati di avere il token corretto
         },
     });
 }
 
+// funzione che cancella un post
 export const deletePost = async (postId) => {
     try {
         const res = await fetch(`http://localhost:5000/api/v1/blogPosts/${postId}`, {
@@ -185,6 +192,7 @@ export const deletePost = async (postId) => {
     }
 }
 
+// Funzione per caricare i dettagli dell'autore
 export const loadAuthorDetails = async (authorId) => {
     const token = localStorage.getItem('token'); // Recupera il token dal local storage
     try {
@@ -208,6 +216,7 @@ export const loadAuthorDetails = async (authorId) => {
     }
 };
 
+// Funzione per aggiungere i like
 export const likePost = async (postId) => {
     const response = await fetch(`http://localhost:5000/api/v1/blogPosts/${postId}/like`, {
       method: "POST",
@@ -225,6 +234,7 @@ export const likePost = async (postId) => {
     return await response.json();
 };
 
+// Funzione per caricare parte della libreria (anime)
 export const loadAnime = async () => {
     const res = await fetch('http://localhost:5000/api/v1/library/anime', {
         method: 'GET',
@@ -241,6 +251,7 @@ export const loadAnime = async () => {
     return data;
 };
 
+// Funzione per caricare parte della libreria (manga)
 export const loadManga = async () => {
     const res = await fetch('http://localhost:5000/api/v1/library/manga', {
         method: 'GET',
@@ -257,6 +268,7 @@ export const loadManga = async () => {
     return data;
 };
   
+// Funzione per caricare la MyLibrary
  export const loadUserLibrary = async (userId) => {
     const res = await fetch(`http://localhost:5000/api/v1/library/user/${userId}/myLibrary`, {
         method: 'GET',
@@ -297,7 +309,7 @@ export const addAnimeToLibrary = async (userId, animeId) => {
     }
 };
 
-
+// Funzione per aggiungere un manga alla libreria
 export const addMangaToLibrary = async (userId, mangaId) => {
     try {
         const response = await fetch(`http://localhost:5000/api/v1/library/user/${userId}/manga`, {
@@ -374,15 +386,16 @@ export const createManga = async (mangaData) => {
     }
 };
 
+// Funzione per aggiornare la privacy
 export const updatePrivacy = async (userId, itemId, { isPrivate }) => { // Destruttura l'oggetto
-    console.log("Valori inviati:", { userId, itemId, isPrivate }); // Log per debug
+    console.log("Valori inviati:", { userId, itemId, isPrivate });
     const res = await fetch(`http://localhost:5000/api/v1/library/user/${userId}/myLibrary/${itemId}/privacy`, {
         method: 'PATCH',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ isPrivate }) // Invia solo isPrivate
+        body: JSON.stringify({ isPrivate })
     });
 
     if (!res.ok) {
@@ -394,6 +407,7 @@ export const updatePrivacy = async (userId, itemId, { isPrivate }) => { // Destr
     return await res.json();
 };
 
+// Funzione per eliminare un elemento dalla mylibrary
 export const deleteFromLibrary = async (userId, itemId) => {
     const res = await fetch(`http://localhost:5000/api/v1/library/user/${userId}/myLibrary/${itemId}`, {
         method: 'DELETE',

@@ -4,15 +4,14 @@
 /* Contenitore principale della home */
 .home-container {
     font-family: 'Open Sans', sans-serif;
-    /* margin-top: 75px; */
     padding: 20px;
     min-height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
     color: #ffffff;
-    position: relative; /* Aggiunto per gestire il posizionamento */
-    z-index: 1; /* Aggiunto per portare il contenitore in primo piano */
+    position: relative; 
+    z-index: 1;
 }
 
 .home-content{
@@ -21,19 +20,17 @@
 }
 
 .home-container.with-bg {
-    position: absolute; /* Cambiato da relative a absolute */
-    top: 0; /* Posizionato all'inizio della pagina */
-    left: 0; /* Posizionato all'inizio della pagina */
-    right: 0; /* Posizionato all'inizio della pagina */
-    bottom: 0; /* Posizionato all'inizio della pagina */
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
     background-image: url('../../backgroundImage/anime-crossover-ash-pokemon-asuna-yuuki-wallpaper-preview.jpg');
     background-size: cover;
-    /* Rimosso il blur */
-    z-index: 0; /* Portato dietro gli altri contenuti */
+    z-index: 0;
 }
 
 .home-container.logged-in-gradient {
-   /*  background: linear-gradient(to bottom right, #2c3e50, #34495e); */
    background: linear-gradient(to bottom right, #9a4ef0, #50c2c9);
 }
 
@@ -45,7 +42,7 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5); /* Patina nera semi-trasparente */
-    z-index: 0; /* Assicurati che l'overlay sia dietro il contenuto */
+    z-index: 0;
 }
 
 /* Titolo Principale */
@@ -53,7 +50,7 @@
     font-family: 'Bangers', cursive;
     font-size: 48px;
     font-weight: bold;
-    color: #ff0054; /* Colore vivace per richiamare lo stile manga */
+    color: #ff0054;
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     margin-top: 50px;
@@ -88,7 +85,7 @@ button {
     transition: background-color 0.3s, transform 0.2s ease;
     box-shadow: 0 4px 8px rgba(154, 78, 240, 0.3);
     margin: 10px;
-    z-index: 1; /* Assicurati che i pulsanti siano sopra il background */
+    z-index: 1;
 }
 
 .home-container .button:hover {
@@ -104,9 +101,9 @@ button:active {
 .btn-login {
     margin-top: 400px;
     display: flex;
-    justify-content: center; /* Centra orizzontalmente */
+    justify-content: center; 
     gap: 10px; /* Distanza tra i bottoni */
-    padding-bottom: 20px; /* Spazio extra dal bordo inferiore */
+    padding-bottom: 20px; 
     }
 
 
@@ -118,52 +115,56 @@ button:active {
     margin-top: 20px;
 }
 
-/* Card per i Post */
-/* .post-card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-}
-
-.post-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-} */
-
-/* Immagine di Copertina del Post */
-/* .post-card img {
+.popup-message-login {
+    margin-top: 100px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #fff;
+    color: #333;
+    padding: 15px 25px;
     border-radius: 8px;
-    width: 100%;
-    height: auto;
-    max-height: 200px;
-    object-fit: cover;
-    margin-bottom: 15px;
-} */
-
-/* Avatar e Nome Autore */
-/* .author-info {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Bangers', cursive;
+    font-size: 1.2rem;
+    animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+    z-index: 1000;
     display: flex;
     align-items: center;
-    margin-top: 15px;
-}
-
-.author-info img {
-    width: 30px; 
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.author-name {
-    font-weight: bold;
-    color: #34495e;
-    font-size: 0.9rem;
-} */
-
-
+    gap: 10px;
+  }
+  
+  .popup-message-login.success {
+    background-color: #4caf50; /* Verde per i messaggi di successo */
+    color: white;
+  }
+  
+  .popup-message-login.error {
+    background-color: #f44336; /* Rosso per i messaggi di errore */
+    color: white;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-10px); }
+  }
+  
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-10px); }
+  }
+  
 
 /* Responsive Design */
 @media (max-width: 768px) {

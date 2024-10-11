@@ -17,8 +17,8 @@ import {
   deleteComment,
   updateComment,
   loadAuthorDetails,
-} from "../../data/fetch.js"; // Importa la funzione per caricare i dettagli dell'autore
-import { jwtDecode } from "jwt-decode"; // Assicurati di importare jwtDecode da 'jwt-decode'
+} from "../../data/fetch.js";
+import { jwtDecode } from "jwt-decode";
 import { UserContext } from "../../context/UserContextProvider.jsx";
 import "./postDetails.css";
 
@@ -34,7 +34,7 @@ const Post = () => {
   const [authorDetails, setAuthorDetails] = useState(null); // Stato per memorizzare i dettagli dell'autore
   const { token } = useContext(UserContext);
   const decodedToken = token ? jwtDecode(token) : null;
-  const authorIdFromToken = decodedToken ? decodedToken.userId : null; // Aggiornato per usare userId
+  const authorIdFromToken = decodedToken ? decodedToken.userId : null;
   const params = useParams();
   const navigate = useNavigate();
   const { id } = params;
@@ -115,13 +115,8 @@ const Post = () => {
           // Carica i dettagli dell'autore in base all'ID
           const authorRes = await loadAuthorDetails(res.author);
           setAuthorDetails(authorRes);
-
           setLoading(false);
 
-          // Console log per verificare i dettagli del post e dei commenti
-          console.log("Post:", res);
-          console.log("Comments:", commentsRes.dati);
-          console.log("Author Details:", authorRes);
         } else {
           navigate("/not-found");
         }
@@ -175,7 +170,7 @@ const Post = () => {
                 </div>
                 <div className="mt-2 border rounded bg-light">
                   {comment.author.name}
-                  {comment.author._id === authorIdFromToken && ( // Usa authorIdFromToken qui
+                  {comment.author._id === authorIdFromToken && (
                     <>
                       <i
                         className="fa-solid fa-pen"

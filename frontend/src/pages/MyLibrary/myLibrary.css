@@ -18,7 +18,7 @@ body {
 h2 {
     font-family: 'Bangers', cursive;
     text-align: center;
-    color: #ff77a9; /* Colore più vivace */
+    color: #ff77a9;
     font-size: 2.5rem;
     margin-top: 20px;
     font-weight: bold;
@@ -28,7 +28,7 @@ h2 {
 
 h3 {
     font-family: 'Bangers', cursive;
-    color: #50c2c9; /* Colore azzurro anime */
+    color: #50c2c9;
     border-bottom: 2px solid #50c2c9;
     padding-bottom: 8px;
     font-size: 1.8rem;
@@ -110,7 +110,7 @@ h3 {
 
 /* Pulsante Privacy */
 .library-card .privacy-button {
-    background-color: #9a4ef0; /* Colore viola vibrante */
+    background-color: #9a4ef0;
 }
 
 .library-card .privacy-button:hover {

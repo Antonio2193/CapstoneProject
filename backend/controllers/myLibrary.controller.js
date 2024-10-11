@@ -10,10 +10,6 @@ export const getUserLibrary = async (req, res) => {
 
         const userLibrary = {
             anime: userAnimeEntries.map(entry => {
-                /* console.log('Entry:', entry);
-                console.log('isPrivate:', entry.isPrivate);
-                console.log('User ID from entry:', entry.userId.toString());
-                console.log('Current User ID:', currentUserId.toString()); */
                 
                 // Verifica se animeId è definito
                 if (!entry.animeId) {
@@ -34,10 +30,6 @@ export const getUserLibrary = async (req, res) => {
             }).filter(entry => entry !== null), // Filtra i nulli
 
             manga: userMangaEntries.map(entry => {
-             /*    console.log('Entry:', entry);
-                console.log('isPrivate:', entry.isPrivate);
-                console.log('User ID from entry:', entry.userId.toString());
-                console.log('Current User ID:', currentUserId.toString()); */
                 
                 // Verifica se mangaId è definito
                 if (!entry.mangaId) {
@@ -58,7 +50,6 @@ export const getUserLibrary = async (req, res) => {
             }).filter(entry => entry !== null), // Filtra i nulli
         };
 
-        console.log('User Library:', userLibrary); // Log per il debug finale
         res.status(200).json(userLibrary);
     } catch (error) {
         console.error("Errore:", error); // Log dell'errore
@@ -114,11 +105,6 @@ export const updatePrivacy = async (req, res) => {
     const itemId = req.params.itemId; // _id dell'oggetto UserLibrary
     const isPrivate = req.body.isPrivate; // Dovrebbe essere un booleano
 
-  /*   console.log("User ID:", userId);
-    console.log("Item ID:", itemId);
-    console.log("Is Private:", isPrivate); // Dovrebbe stampare true o false
-    console.log(req.body);
- */
     try {
         const updatedEntry = await UserLibrary.findByIdAndUpdate(
             itemId,

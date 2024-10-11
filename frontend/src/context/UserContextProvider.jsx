@@ -33,7 +33,7 @@ export default function UserContextProvider({ children }) {
     }
 };
 
-  // Nuova funzione per aggiornare myLibrary con un anime aggiunto
+  //funzione per aggiornare myLibrary con un anime aggiunto
   const addAnimeToMyLibrary = (addedAnime) => {
     setMyLibrary(prevLibrary => ({
       ...prevLibrary,
@@ -41,7 +41,7 @@ export default function UserContextProvider({ children }) {
     }));
   };
 
-  // Nuova funzione per aggiornare myLibrary con un manga aggiunto
+  //funzione per aggiornare myLibrary con un manga aggiunto
   const addMangaToMyLibrary = (addedManga) => {
     setMyLibrary(prevLibrary => ({
       ...prevLibrary,
@@ -78,12 +78,12 @@ const removeFromLibrary = async (itemId, type) => {
   }
 };
 
-  // Effetto per ottenere i dati dell'utente
+  // Funzione per ottenere i dati dell'utente
   useEffect(() => {
     if (token) getME();
   }, [token]);
   
-  // Effetto per caricare la MyLibrary quando userInfo è disponibile
+  // Funzione per caricare la MyLibrary quando userInfo è disponibile
   useEffect(() => {
     if (userInfo) getMyLibrary(); // Assicurati che userInfo sia disponibile prima di chiamare getMyLibrary
   }, [userInfo]);
@@ -95,7 +95,7 @@ const removeFromLibrary = async (itemId, type) => {
     setUserInfo, 
     myLibrary, 
     setMyLibrary,
-    addAnimeToMyLibrary, // Aggiungiamo queste funzioni per aggiornarle globalmente
+    addAnimeToMyLibrary,
     addMangaToMyLibrary,
     getMyLibrary,
     togglePrivacy,

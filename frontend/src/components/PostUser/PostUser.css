@@ -2,7 +2,7 @@
 .blog-author {
   width: 50px;
   height: 50px;
-  border: 2px solid #50c2c9; /* Bordo azzurro neon per tema anime */
+  border: 2px solid #50c2c9; /* Bordo azzurro neon */
   border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra per profondità */
   transition: transform 0.2s ease;

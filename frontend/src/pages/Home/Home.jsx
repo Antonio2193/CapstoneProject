@@ -1,15 +1,20 @@
+import React, { useContext, useState, useEffect } from "react";
 import { Button, Container, Modal, Form } from "react-bootstrap";
-import "./Home.css";
-import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContextProvider";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { login } from "../../data/fetch";
 import PostList from "../../components/PostList/PostList";
+import "./Home.css";
 
 const Home = (props) => {
   let [searchParams, setSearchParams] = useSearchParams();
   const { token, setToken, setUserInfo } = useContext(UserContext);
   const [show, setShow] = useState(false);
+
+  // Stati per il popup personalizzato
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState(""); // success o error
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -23,45 +28,54 @@ const Home = (props) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
 
+  // Funzione per mostrare il popup
+  const handleShowPopup = (message, type) => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 3000);
+  };
+
   const handleLogin = async () => {
     try {
       const tokenObj = await login(formValue);
-      console.log(tokenObj);
       if (tokenObj && tokenObj.token) {
         localStorage.setItem("token", tokenObj.token);
         setToken(tokenObj.token);
+        setUserInfo(tokenObj.user); // Imposta le informazioni utente
         handleClose();
-        alert("Login effettuato con successo");
+        handleShowPopup("Login effettuato con successo!", "success");
       } else {
-        alert("Credenziali non valide");
+        handleShowPopup("Credenziali non valide", "error");
       }
     } catch (error) {
-      console.log(error);
-      alert(error + " errore");
+      console.error(error);
+      handleShowPopup("Errore: impossibile effettuare il login", "error");
     }
   };
 
   // Gestione dei parametri di ricerca per il login con Google
   useEffect(() => {
-    const token = searchParams.get('token');
-    const name = searchParams.get('name');
-    const avatar = searchParams.get('avatar');
-    const email = searchParams.get('email');
-    console.log("Avatar URL:", avatar);
+    const token = searchParams.get("token");
+    const name = searchParams.get("name");
+    const avatar = searchParams.get("avatar");
+    const email = searchParams.get("email");
 
     if (token) {
-      localStorage.setItem('token', token);
+      localStorage.setItem("token", token);
       setToken(token);
 
       setUserInfo({
-        name: name || '',
-        avatar: avatar || '',
-        email: email || ''
+        name: name || "",
+        avatar: avatar || "",
+        email: email || "",
       });
 
       setTimeout(() => {
         setSearchParams({});
-      }, 100); // Imposta un leggero ritardo per dare tempo a `userInfo` di aggiornarsi
+      }, 100);
     }
   }, [searchParams, setToken, setUserInfo, setSearchParams]);
 
@@ -70,21 +84,19 @@ const Home = (props) => {
   };
 
   return (
-    <Container fluid className={`home-container ${!token ? 'with-bg' : 'logged-in-gradient'}`}>
+    <Container fluid className={`home-container ${!token ? "with-bg" : "logged-in-gradient"}`}>
       <div className="overlay" />
-      <div className="content"> 
-        {/* Mostra il titolo e il paragrafo solo se l'utente NON è loggato */}
-        <div className="home-content text-center  mt-5">
-        {!token && (
-          <>
-            <h1 className="blog-main-title mb-3">Benvenuto su OtakuWorld!</h1>
-            <p className="mb-3 blog-main-content">
-              Il mondo di anime e manga che stavi cercando!
-            </p>
-          </>
-        )}
+      <div className="content">
+        <div className="home-content text-center mt-5">
+          {!token && (
+            <>
+              <h1 className="blog-main-title mb-3">Benvenuto su OtakuWorld!</h1>
+              <p className="mb-3 blog-main-content">
+                Il mondo di anime e manga che stavi cercando!
+              </p>
+            </>
+          )}
         </div>
-        {/* Mostra i pulsanti di login solo se l'utente NON è loggato */}
         {!token && (
           <div className="text-center btn-login">
             <Button variant="primary" onClick={handleShow}>
@@ -133,6 +145,13 @@ const Home = (props) => {
             </Button>
           </Modal.Footer>
         </Modal>
+
+        {/* Popup messaggio personalizzato */}
+        {showPopup && (
+          <div className={`popup-message-login ${popupType}`}>
+            {popupMessage}
+          </div>
+        )}
 
         {/* Mostra il PostList solo se l'utente è loggato */}
         {token && <PostList />}

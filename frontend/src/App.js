@@ -8,8 +8,8 @@ import Post from './pages/PostDetails/postDetails';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Library from './pages/Library/library';
 import MyLibrary from './pages/MyLibrary/myLibrary';
-import SearchUser from './pages/SearchUser/SearchUser';  // Nuovo componente per cercare utenti
-import OtherUserLibrary from './pages/OtherUserLibrary/OtherUserLibrary'; // Nuovo componente per vedere la libreria di un altro utente
+import SearchUser from './pages/SearchUser/SearchUser';  
+import OtherUserLibrary from './pages/OtherUserLibrary/OtherUserLibrary';
 
 function App() {
   return (
@@ -22,8 +22,6 @@ function App() {
           <Route path="/new" element={<NewPost />} />
           <Route path="/library" element={<Library />} />
           <Route path="/mylibrary" element={<MyLibrary />} />
-          
-          {/* Nuove rotte */}
           <Route path="/search" element={<SearchUser />} /> {/* Rotta per cercare utenti */}
           <Route path="/user/:userId/library" element={<OtherUserLibrary />} /> {/* Rotta per vedere la libreria di un altro utente */}
         </Routes>

@@ -4,46 +4,46 @@
     margin: 20px;
     margin-top: 100px;
     padding: 20px;
-    background-color: #34495e; /* Colore di sfondo della sezione */
-    border-radius: 10px; /* Angoli arrotondati */
-    color: #ffffff; /* Colore del testo */
+    background-color: #34495e; 
+    border-radius: 10px; 
+    color: #ffffff; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombra per profondità */
 }
 
 /* Titolo della sezione di ricerca */
 .search-title {
     font-family: 'Bangers', cursive;
-    font-size: 36px; /* Dimensione del titolo */
-    color: #ff0054; /* Colore vivace */
+    font-size: 36px; 
+    color: #ff0054; 
     text-align: center;
-    margin-bottom: 20px; /* Spazio sotto il titolo */
+    margin-bottom: 20px; 
 }
 
 /* Stile per il form di ricerca */
 .search-form {
-    display: flex; /* Usa flexbox per il layout */
-    justify-content: center; /* Centro il contenitore */
-    margin-bottom: 20px; /* Spazio sotto il form */
+    display: flex;
+    justify-content: center; 
+    margin-bottom: 20px; 
 }
 
 /* Input di ricerca */
 .search-input {
-    padding: 10px; /* Spazio interno */
-    border: none; /* Nessun bordo */
-    border-radius: 5px; /* Angoli arrotondati */
-    margin-right: 10px; /* Spazio a destra */
+    padding: 10px; 
+    border: none; 
+    border-radius: 5px; 
+    margin-right: 10px; 
 }
 
 /* Pulsante di ricerca */
 .search-button {
-    padding: 10px 20px; /* Spazio interno */
-    background-color: #9a4ef0; /* Colore di sfondo */
-    color: white; /* Colore del testo */
-    border: none; /* Nessun bordo */
-    border-radius: 5px; /* Angoli arrotondati */
-    cursor: pointer; /* Indicatore cliccabile */
+    padding: 10px 20px; 
+    background-color: #9a4ef0; 
+    color: white; 
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer; 
     transition: background-color 0.3s; /* Transizione per l'effetto hover */
-    height: 45px; /* Altezza del pulsante */
+    height: 45px; 
 }
 
 /* Effetto hover sul pulsante di ricerca */
@@ -53,50 +53,50 @@
 
 /* Messaggio di errore */
 .error-message {
-    color: #ff0054; /* Colore rosso per il messaggio di errore */
-    text-align: center; /* Centro il messaggio */
-    margin: 10px 0; /* Margine verticale */
+    color: #ff0054; 
+    text-align: center; 
+    margin: 10px 0; 
 }
 
 /* Lista degli utenti */
 .user-list {
-    list-style: none; /* Rimuovi i punti dalla lista */
-    padding: 0; /* Rimuovi padding */
+    list-style: none; 
+    padding: 0; 
 }
 
 /* Elemento della lista utente */
 .user-item {
-    display: flex; /* Usa flexbox per layout */
-    align-items: center; /* Allinea verticalmente */
-    margin-bottom: 15px; /* Spazio sotto ogni elemento */
-    padding: 10px; /* Spazio interno */
-    background-color: #ffffff; /* Colore di sfondo bianco */
-    border-radius: 5px; /* Angoli arrotondati */
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 15px; 
+    padding: 10px; 
+    background-color: #ffffff; 
+    border-radius: 5px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombra leggera */
 }
 
 /* Avatar dell'utente */
 .user-avatar {
-    width: 40px; /* Larghezza dell'avatar */
-    height: 40px; /* Altezza dell'avatar */
-    border-radius: 50%; /* Rendilo circolare */
-    margin-right: 10px; /* Spazio a destra */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; 
+    margin-right: 10px; 
 }
 
 /* Informazioni dell'utente */
 .user-info {
     flex: 1; /* Occupare lo spazio disponibile */
-    color: #34495e; /* Colore del testo dell'utente */
+    color: #34495e; 
 }
 
 /* Pulsante per visualizzare la libreria */
 .view-library-button {
-    background-color: #50c2c9; /* Colore del pulsante */
-    color: white; /* Colore del testo */
-    border: none; /* Nessun bordo */
-    border-radius: 5px; /* Angoli arrotondati */
-    cursor: pointer; /* Indicatore cliccabile */
-    padding: 5px 10px; /* Spazio interno */
+    background-color: #50c2c9; 
+    color: white; 
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+    padding: 5px 10px; 
     transition: background-color 0.3s; /* Transizione per l'effetto hover */
 }
 

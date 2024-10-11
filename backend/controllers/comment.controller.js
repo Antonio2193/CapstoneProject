@@ -1,5 +1,4 @@
 import Comment from "../models/commentSchema.js";
-/* import Post from '../models/postSchema.js' */
 
 export const getComments = async (req, res) => {
     try {
@@ -17,27 +16,13 @@ export const getComments = async (req, res) => {
 
 export const getSingleComment = async (req, res) => {
     try {
-        const singleComment = await Comment.findOne({ post: req.params.postId, _id: req.params.commentId })/* .populate('user') */
+        const singleComment = await Comment.findOne({ post: req.params.postId, _id: req.params.commentId })
         return res.status(200).send(singleComment)
     } catch (error) {
         console.log(error)
         return res.status(404).send({ message: 'Not Found' })
     }
 }
-
-/* export const createComment = async (req,res)=>{   
-    const postId = req.params.postId
-    const commentInfo = req.body
-    try {
-        const newComment = new Comment ({...commentInfo, post: postId})
-         //salva i dati prendendoli nel db , prendendoli dall'istanza
-        const createdComment = await newComment.save()
-        //invia i dati al database
-        res.status(200).send(createdComment)
-    } catch (error) {
-        res.status(400).send(error)
-    }  
-} */
 
     export const createComment = async (req, res) => {
         const postId = req.params.postId;

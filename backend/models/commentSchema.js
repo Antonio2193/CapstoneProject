@@ -15,7 +15,7 @@ const commentSchema = new Schema({
     },
     author: {
         type: Schema.Types.ObjectId,
-        ref: 'User' // Verifica che il nome del modello User sia esattamente "User"
+        ref: 'User' 
     },
 }, {
     collection: 'comments',

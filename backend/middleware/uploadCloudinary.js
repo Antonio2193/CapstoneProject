@@ -17,6 +17,6 @@ const storage = new CloudinaryStorage({
     },
 });
 
-const uploadCloudinary = multer({ storage: storage }); // il primo storage è da documentazione, il secondo è la variabile creata a riga 12
+const uploadCloudinary = multer({ storage: storage }); // il primo storage è da documentazione, il secondo è la variabile creata a riga 13
 
 export default uploadCloudinary
