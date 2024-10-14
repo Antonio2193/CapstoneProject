@@ -224,7 +224,7 @@ const Library = () => {
 
   return (
     <div className="library">
-      <h1>Libreria</h1>
+      <h1 className="h1-library">Libreria</h1>
 
       {/* Messaggio Popup */}
       {popupMessage && (

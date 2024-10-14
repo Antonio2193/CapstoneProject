@@ -38,8 +38,23 @@ const PostItem = (props) => {
   };
   const [formValue, setFormValue] = useState(initialFormValue);
   const [newCommentText, setNewCommentText] = useState("");
-  const [authorDetails, setAuthorDetails] = useState({}); // Stato per i dettagli dell'autore
-  const [showAllComments, setShowAllComments] = useState(false); // Stato per mostrare tutti i commenti
+  const [authorDetails, setAuthorDetails] = useState({});
+  const [showAllComments, setShowAllComments] = useState(false);
+
+  // Stati per il popup personalizzato
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState(""); // "success" o "error"
+  const [showPopup, setShowPopup] = useState(false);
+
+  // Funzione per mostrare il popup
+  const handleShowPopup = (message, type) => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 3000);
+  };
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -53,7 +68,6 @@ const PostItem = (props) => {
     fetchComments();
   }, [_id, aggiornaPostList]);
 
-  // Funzione per caricare i dettagli dell'autore
   useEffect(() => {
     const fetchAuthorDetails = async () => {
       try {
@@ -61,7 +75,7 @@ const PostItem = (props) => {
           `http://localhost:5000/api/v1/users/${author}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`, // Aggiungi l'intestazione di autorizzazione
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -80,7 +94,7 @@ const PostItem = (props) => {
     };
 
     fetchAuthorDetails();
-  }, [author, token]); // Aggiungi token alle dipendenze
+  }, [author, token]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -93,10 +107,10 @@ const PostItem = (props) => {
       });
       setNewCommentText("");
       setAggiornaPostList((prev) => !prev);
-      alert("Commento aggiunto con successo!"); // Notifica di successo
+      handleShowPopup("Commento aggiunto con successo!", "success");
     } catch (error) {
       console.error("Errore durante l'aggiunta del commento:", error);
-      alert("Errore durante l'aggiunta del commento."); // Notifica di errore
+      handleShowPopup("Errore durante l'aggiunta del commento.", "error");
     }
   };
 
@@ -135,14 +149,17 @@ const PostItem = (props) => {
         console.log("Post aggiornato con successo:", updatedPost);
         handleClose();
         setAggiornaPostList(!aggiornaPostList);
+        handleShowPopup("Post aggiornato con successo!", "success");
       } else {
         console.error(
           "Errore durante l'aggiornamento del post:",
           response.status
         );
+        handleShowPopup("Errore durante l'aggiornamento del post.", "error");
       }
     } catch (error) {
       console.error("Errore:", error);
+      handleShowPopup("Errore durante l'aggiornamento del post.", "error");
     }
   };
 
@@ -150,22 +167,23 @@ const PostItem = (props) => {
     if (window.confirm("Sei sicuro di voler eliminare questo post?")) {
       try {
         await deletePost(_id);
-        alert("Post eliminato!");
+        handleShowPopup("Post eliminato!", "success");
         setAggiornaPostList(!aggiornaPostList);
       } catch (error) {
         console.error("Errore durante l'eliminazione del post:", error);
-        alert("Impossibile eliminare il post");
+        handleShowPopup("Impossibile eliminare il post.", "error");
       }
     }
   };
 
   const handleLikePost = async () => {
     try {
-      // Invia richiesta di "like" al backend
       await likePost(_id);
-      setAggiornaPostList((prev) => !prev); // Ricarica i post per aggiornare i like
+      setAggiornaPostList((prev) => !prev);
+      handleShowPopup("Hai messo un like al post!", "success");
     } catch (error) {
       console.error("Errore durante l'aggiunta del like:", error);
+      handleShowPopup("Errore durante l'aggiunta del like.", "error");
     }
   };
 
@@ -201,7 +219,6 @@ const PostItem = (props) => {
         </div>
       </Card.Footer>
 
-      {/* Mostra i commenti */}
       <Card.Body className="comment-section">
         <h5>Commenti:</h5>
         {comments.length > 0 ? (
@@ -231,7 +248,6 @@ const PostItem = (props) => {
         )}
       </Card.Body>
 
-      {/* Form per il nuovo commento */}
       <Card.Body className="new-comment-form">
         <Form onSubmit={handleNewComment} className="form-new-comment">
           <Form.Group controlId="formNewComment">
@@ -250,7 +266,6 @@ const PostItem = (props) => {
         </Form>
       </Card.Body>
 
-      {/* Modale per l'edit del post */}
       <Modal show={show} onHide={handleClose} className="edit-post-modal">
         <Modal.Header closeButton>
           <Modal.Title>Edit Post</Modal.Title>
@@ -290,6 +305,13 @@ const PostItem = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Popup messaggio personalizzato */}
+      {showPopup && (
+        <div className={`popup-message-login ${popupType}`}>
+          {popupMessage}
+        </div>
+      )}
     </Card>
   );
 };

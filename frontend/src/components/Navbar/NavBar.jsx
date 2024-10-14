@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Button, Container, Navbar, Modal, Form, Image } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "./NavBar.css";
 import { UserContext } from "../../context/UserContextProvider";
-import { useContext, useState } from "react";
 import { register } from "../../data/fetch";
 
 const NavBar = (props) => {
@@ -11,7 +10,7 @@ const NavBar = (props) => {
   const { userInfo, setUserInfo } = useContext(UserContext);
   const navigate = useNavigate();
   const [showReg, setShowReg] = useState(false);
-  
+
   const handleCloseReg = () => setShowReg(false);
   const handleShowReg = () => setShowReg(true);
 
@@ -22,7 +21,7 @@ const NavBar = (props) => {
     password: "",
     email: "",
   };
-  
+
   const [regFormValue, setRegFormValue] = useState(initialRegistrationFormValue);
   const [avatar, setAvatar] = useState("");
 
@@ -37,12 +36,32 @@ const NavBar = (props) => {
     setAvatar(event.target.files[0]);
   };
 
+  // Stati per il popup personalizzato
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState(""); // "success" o "error"
+  const [showPopup, setShowPopup] = useState(false);
+
+  // Funzione per mostrare il popup
+  const handleShowPopup = (message, type) => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 3000);
+  };
+
   const handleRegister = async () => {
     const res = await register(regFormValue, avatar);
-    console.log(res);
     handleCloseReg();
     setRegFormValue(initialRegistrationFormValue);
-    alert('Registrazione effettuata');
+
+    // Verifica della presenza di un ID per confermare la registrazione
+    if (res && res._id) {
+      handleShowPopup("Registrazione effettuata con successo!", "success");
+    } else {
+      handleShowPopup("Errore nella registrazione", "error");
+    }
   };
 
   const handleLogout = () => {
@@ -62,36 +81,19 @@ const NavBar = (props) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <div className="d-flex align-items-center ms-auto">
-            {token &&( <Link to="/library" className="navbar-link ms-3">
-              Library
-            </Link>)}
-
-            
-            {token &&(<Link to="/mylibrary" className="navbar-link ms-3">
-              MyLibrary
-            </Link>)}
-
-            
-            {token &&(<Link to="/search" className="navbar-link ms-3">
-              Cerca Utenti
-            </Link>)}
+            {token && (<Link to="/library" className="navbar-link ms-3">Library</Link>)}
+            {token && (<Link to="/mylibrary" className="navbar-link ms-3">La Mia Libreria</Link>)}
+            {token && (<Link to="/search" className="navbar-link ms-3">Cerca Utenti</Link>)}
 
             {!token && (
               <Button className="ms-3" variant="secondary" onClick={handleShowReg}>
-                Register
+                Registrati
               </Button>
             )}
 
             {token && (
               <Button as={Link} to="/new" className="blog-navbar-add-button bg-dark">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
                   <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
                 </svg>
                 Post
@@ -112,18 +114,18 @@ const NavBar = (props) => {
       {/* Modal per la registrazione */}
       <Modal show={showReg} onHide={handleCloseReg}>
         <Modal.Header closeButton>
-          <Modal.Title>REGISTER</Modal.Title>
+          <Modal.Title>REGISTRAZIONE</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
                 name="email"
                 value={regFormValue.email}
                 onChange={handleChangeRegistration}
-                placeholder="name@example.com"
+                placeholder="nome@esempio.com"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
@@ -133,27 +135,27 @@ const NavBar = (props) => {
                 name="password"
                 value={regFormValue.password}
                 onChange={handleChangeRegistration}
-                placeholder="your password"
+                placeholder="la tua password"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput5">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Nome</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
                 value={regFormValue.name}
                 onChange={handleChangeRegistration}
-                placeholder="your name"
+                placeholder="il tuo nome"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput6">
-              <Form.Label>Surname</Form.Label>
+              <Form.Label>Cognome</Form.Label>
               <Form.Control
                 type="text"
                 name="surname"
                 value={regFormValue.surname}
                 onChange={handleChangeRegistration}
-                placeholder="your surname"
+                placeholder="il tuo cognome"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput7">
@@ -162,20 +164,27 @@ const NavBar = (props) => {
                 type="file"
                 name="avatar"
                 onChange={handleChangeImage}
-                placeholder="your picture"
+                placeholder="la tua immagine"
               />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseReg}>
-            Close
+            Chiudi
           </Button>
           <Button variant="primary" onClick={handleRegister}>
-            Register now
+            Registrati ora
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Popup messaggio personalizzato */}
+      {showPopup && (
+        <div className={`popup-message-login ${popupType}`}>
+          {popupMessage}
+        </div>
+      )}
     </Navbar>
   );
 };

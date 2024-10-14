@@ -71,8 +71,8 @@ The project is a social network dedicated to manga and anime enthusiasts, design
 Users can register either via the website or through Google login. After logging in, users are redirected to the homepage where they can interact with published content.
 
 2. # Homepage
-Post Feed: Users can view their posts and posts from other users, ordered from most recent to oldest. Post Creation and Management:
-
+Post Feed: Users can view their posts and posts from other users, ordered from most recent to oldest. 
+Post Creation and Management:
 Users can create new posts.
 Post owners can edit or delete their own posts.
 <!-- Comments and Reactions: -->
