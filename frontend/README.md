@@ -61,7 +61,7 @@ Questo progetto vuole essere una piattaforma social pensata per appassionati di 
 
 
 
-# Manga & Anime Community - README (INGLESE)
+# Manga & Anime Community - README (ENGLISH)
 
 <!-- Project Description -->
 The project is a social network dedicated to manga and anime enthusiasts, designed to create a community where users can share interests, post opinions, and build a personalized library of anime and manga. The platform provides various social and content management features to enhance the sharing experience.
