@@ -75,7 +75,7 @@ const NavBar = (props) => {
     <Navbar expand="lg" className="blog-navbar" fixed="top">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          <span className="blog-navbar-title">Nome Sito</span>
+          <span className="blog-navbar-title">OtakuWorld!</span>
         </Navbar.Brand>
         
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -86,13 +86,13 @@ const NavBar = (props) => {
             {token && (<Link to="/search" className="navbar-link ms-3">Cerca Utenti</Link>)}
 
             {!token && (
-              <Button className="ms-3" variant="secondary" onClick={handleShowReg}>
+              <Button className="ms-3 bottone-rosso" variant="secondary" onClick={handleShowReg}>
                 Registrati
               </Button>
             )}
 
             {token && (
-              <Button as={Link} to="/new" className="blog-navbar-add-button bg-dark">
+              <Button as={Link} to="/new" className="bottone-rosso">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
                   <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
                 </svg>
@@ -101,7 +101,7 @@ const NavBar = (props) => {
             )}
 
             {token && (
-              <Button className="ms-2 me-2 logout" variant="primary" onClick={handleLogout}>
+              <Button className="ms-2 me-2 logout bottone-bianco"  onClick={handleLogout}>
                 Logout
               </Button>
             )}

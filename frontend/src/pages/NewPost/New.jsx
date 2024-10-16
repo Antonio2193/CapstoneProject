@@ -60,25 +60,25 @@ const NewPost = (props) => {
     <Container className="new-blog-container">
       <Form className="mt-5" onSubmit={handleSend}>
         <Form.Group controlId="blog-category" className="mt-3">
-          <Form.Label>Categoria</Form.Label>
-          <Form.Control size="lg" as="select" name="category" onChange={handleChangeFormValue}>
+          <Form.Label className="modale-colore">Categoria</Form.Label>
+          <Form.Control size="lg" as="select" name="category" onChange={handleChangeFormValue} className="bottone-bianco">
             <option>Manga</option>
             <option>Anime</option>
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="cover" className="mt-3 mb-3">
-          <Form.Label>Cover</Form.Label>
-          <Form.Control type="file" name="cover" onChange={handleChangeImage} />
+          <Form.Label className="modale-colore">Cover</Form.Label>
+          <Form.Control type="file" name="cover" onChange={handleChangeImage} className="bottone-bianco"/>
         </Form.Group>
         <Form.Group controlId="blog-content" className="mt-3">
-          <Form.Label>Contenuto Post</Form.Label>
+          <Form.Label className="modale-colore">Contenuto Post</Form.Label>
           <Editor value={text} onChange={handleChange} className="new-blog-content" />
         </Form.Group>
         <Form.Group className="d-flex mt-3 justify-content-end">
-          <Button type="reset" size="lg" variant="outline-dark">
+          <Button type="reset" size="lg" className="bottone-bianco">
             Reset
           </Button>
-          <Button type="submit" size="lg" variant="dark" style={{ marginLeft: "1em" }}>
+          <Button type="submit" size="lg" className="bottone-viola" style={{ marginLeft: "1em" }}>
             Invia
           </Button>
         </Form.Group>

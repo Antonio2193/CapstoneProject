@@ -88,7 +88,7 @@
 }
 
 .default-icon {
-  color: #50c2c9 !important;
+  color: var(--accent-color) !important;
 }
 
 /* Contenitore dei commenti */
@@ -105,36 +105,19 @@
 .comment-text {
   font-size: 1rem;
   margin-bottom: 5px;
-  color: orange;
+  color: black;
 }
 
 .no-comments{
   font-size: 1rem;
   margin-bottom: 5px;
-  color: orange;
+  color:black;
 }
 
 .comment-author {
   font-size: 0.9rem;
   color: #9a4ef0;
   font-weight: bold;
-}
-
-/* Pulsante per mostrare/nascondere i commenti */
-.show-comments-button {
-  border: none;
-  background: transparent;
-  color: #50c2c9;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: color 0.3s ease;
-}
-
-.show-comments-button:hover {
-  color: #3bb5bc;
 }
 
 /* Form per aggiungere un commento */

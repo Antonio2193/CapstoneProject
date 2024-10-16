@@ -15,7 +15,7 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  background: linear-gradient(to bottom right, #9a4ef0, #50c2c9); /* Gradiente di sfondo */
+  background-color: white;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
@@ -73,18 +73,6 @@
   font-size: 1rem;
   color: #34495e;
   padding: 10px;
-}
-
-/* Icone modifica e cancellazione del commento */
-.fa-pen,
-.fa-trash {
-  color: #9a4ef0;
-  transition: color 0.3s ease;
-}
-
-.fa-pen:hover,
-.fa-trash:hover {
-  color: #50c2c9;
 }
 
 /* Pulsanti */

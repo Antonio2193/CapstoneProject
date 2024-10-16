@@ -1,3 +1,37 @@
+:root {
+ --accent-color: #9a4ef0;
+ --background-color:#f0eff4;
+ --title-color: #ff0054;
+}
+
+.bottone-rosso, .bottone-rosso:hover, .bottone-rosso:focus {
+  background-color: var(--title-color) !important;
+  color: white !important;
+  border: transparent !important;
+}
+
+.modale-colore{
+  color: black !important;
+}
+
+.bg-grigio, .bg-grigio>* {
+  background-color: var(--background-color) !important;
+  color: black !important;
+}
+
+.bottone-viola , .bottone-viola:hover, .bottone-viola:focus {
+  background-color: var(--accent-color) !important;
+  color: white !important;
+  border: transparent !important;
+}
+
+.bottone-bianco, .bottone-bianco:hover, .bottone-bianco:focus {
+  background-color: white !important;
+  color: var(--accent-color) !important;
+  border: transparent !important;
+}
+
+
 .App {
   text-align: center;
 }

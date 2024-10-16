@@ -85,7 +85,7 @@ const Home = (props) => {
 
   return (
     <Container fluid className={`home-container ${!token ? "with-bg" : "logged-in-gradient"}`}>
-      <div className="overlay" />
+      {!token && <div className="overlay" />}
       <div className="content">
         <div className="home-content text-center mt-5">
           {!token && (
@@ -99,11 +99,11 @@ const Home = (props) => {
         </div>
         {!token && (
           <div className="text-center btn-login">
-            <Button variant="primary" onClick={handleShow}>
+            <Button className = "bottone-rosso" onClick={handleShow}>
               Login
             </Button>
             or
-            <Button variant="primary" onClick={handleGoogleLogin}>
+            <Button className = "bottone-viola" onClick={handleGoogleLogin}>
               Login with Google
             </Button>
           </div>
@@ -117,7 +117,7 @@ const Home = (props) => {
           <Modal.Body>
             <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label className = "modale-colore">Email address</Form.Label>
                 <Form.Control
                   type="email"
                   name="email"
@@ -126,7 +126,7 @@ const Home = (props) => {
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-                <Form.Label>Password</Form.Label>
+                <Form.Label className = "modale-colore">Password</Form.Label>
                 <Form.Control
                   type="password"
                   name="password"
@@ -137,10 +137,10 @@ const Home = (props) => {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button className="bottone-rosso" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleLogin}>
+            <Button className="bottone-viola" onClick={handleLogin}>
               Login now
             </Button>
           </Modal.Footer>

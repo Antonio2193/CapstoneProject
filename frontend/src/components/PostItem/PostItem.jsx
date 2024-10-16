@@ -188,21 +188,21 @@ const PostItem = (props) => {
   };
 
   return (
-    <Card className="blog-card">
+    <Card className="blog-card bg-grigio">
       <Link to={`/post/${_id}`} className="blog-link">
         <Card.Img variant="top" src={cover} className="blog-cover" />
         <Card.Body>
-          <Card.Text className="blog-card-text">{content}</Card.Text>
+          <Card.Text className="blog-card-text bg-grigio">{content}</Card.Text>
         </Card.Body>
       </Link>
-      <Card.Footer className="blog-card-footer">
+      <Card.Footer className="blog-card-footer bg-grigio">
         <PostUser name={authorDetails.name} avatar={authorDetails.avatar} />
         {userInfo?._id === author && (
           <div className="button-container">
-            <Button variant="primary" className="ms-2 icon-button" onClick={handleEditPost}>
+            <Button className="ms-2 icon-button bottone-bianco" onClick={handleEditPost}>
               <i className="fas fa-edit"></i> 
             </Button>
-            <Button variant="warning" onClick={handleDelete} className="icon-button">
+            <Button  onClick={handleDelete} className="icon-button bottone-rosso">
               <i className="fas fa-trash"></i> 
             </Button>
           </div>
@@ -236,7 +236,7 @@ const PostItem = (props) => {
             {comments.length > 3 && (
               <button
                 onClick={() => setShowAllComments(!showAllComments)}
-                className="show-comments-button"
+                className="bottone-viola"
               >
                 <i className={`fas fa-chevron-${showAllComments ? "up" : "down"}`}></i>
                 {showAllComments ? " Nascondi commenti" : " Mostra tutti i commenti"}
@@ -260,7 +260,7 @@ const PostItem = (props) => {
               className="comment-input"
             />
           </Form.Group>
-          <Button variant="primary" type="submit" className="submit-comment">
+          <Button  type="submit" className="submit-comment bottone-bianco">
             Invia
           </Button>
         </Form>

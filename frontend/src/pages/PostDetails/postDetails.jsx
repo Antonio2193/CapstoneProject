@@ -133,7 +133,7 @@ const Post = () => {
   } else {
     return (
       <div className="blog-details-root">
-        <Container>
+        <Container className="bg-grigio">
           <Image className="blog-details-cover" src={post.cover} fluid />
           <h1 className="blog-details-title">{post.title}</h1>
 
@@ -156,13 +156,13 @@ const Post = () => {
 
           <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
 
-          <div className="mt-5">Post comments:</div>
+          <div className="mt-5 ">Post comments:</div>
           <Row>
             {comments.map((comment) => (
               <Col
                 key={comment._id}
                 md={8}
-                className="mb-3 comment"
+                className="mb-3 comment ms-2"
                 style={{ marginBottom: 20 }}
               >
                 <div className="mt-2 border rounded bg-light">
@@ -189,7 +189,7 @@ const Post = () => {
             ))}
           </Row>
 
-          <Button onClick={handleShow}>Add Comment</Button>
+          <Button onClick={handleShow} className="bottone-viola">Add Comment</Button>
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>

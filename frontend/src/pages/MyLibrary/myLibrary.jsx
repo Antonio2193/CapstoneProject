@@ -71,7 +71,7 @@ const MyLibrary = () => {
               
               {/* Bottone Elimina */}
               <button
-                className="delete-button"
+                className="delete-button bottone-rosso"
                 onClick={() => handleRemoveFromLibrary(anime.originalID, 'anime')}
               >
                 <i className="fas fa-trash-alt fa-icon"></i> Elimina
@@ -108,7 +108,7 @@ const MyLibrary = () => {
                 
                 {/* Bottone Elimina */}
                 <button
-                  className="delete-button"
+                  className="delete-button bottone-rosso"
                   onClick={() => handleRemoveFromLibrary(manga.originalID, 'manga')}
                 >
                   <i className="fas fa-trash-alt fa-icon"></i> Elimina

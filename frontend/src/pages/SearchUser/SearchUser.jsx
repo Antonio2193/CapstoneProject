@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SearchUser.css';
+import { Button } from 'react-bootstrap';
 
 const SearchUser = () => {
     const [query, setQuery] = useState('');
@@ -50,9 +51,9 @@ const SearchUser = () => {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                 />
-                <button type="submit" className="search-button" disabled={loading}>
+                <Button type="submit" className="bottone-viola search-button" disabled={loading}>
                     {loading ? 'Cercando...' : 'Cerca'}
-                </button>
+                </Button>
             </form>
 
             {error && <p className="error-message">{error}</p>}

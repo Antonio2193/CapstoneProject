@@ -246,7 +246,7 @@ const Library = () => {
 
       {/* Bottone per mostrare il form di aggiunta se non ci sono risultati */}
       {(filteredAnime.length === 0 || filteredManga.length === 0) && (
-        <Button variant="primary" onClick={() => setShowAddForm(true)}>
+        <Button className="bottone-viola" onClick={() => setShowAddForm(true)}>
           Aggiungi un nuovo anime o manga
         </Button>
       )}
@@ -348,7 +348,7 @@ const Library = () => {
             </Form.Control>
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button className="bottone-viola" type="submit">
             Aggiungi
           </Button>
         </Form>
@@ -383,7 +383,7 @@ const Library = () => {
                     : "Continuing"}
                 </p>
                 {!isInLibrary(item._id, "anime") && (
-                  <button onClick={() => handleAddAnime(item._id)}>
+                  <button onClick={() => handleAddAnime(item._id)} className="bottone-viola">
                     Aggiungi a My Library
                   </button>
                 )}
@@ -427,7 +427,7 @@ const Library = () => {
                     : "Continuing"}
                 </p>
                 {!isInLibrary(item._id, "manga") && (
-                  <button onClick={() => handleAddManga(item._id)}>
+                  <button onClick={() => handleAddManga(item._id)} className="bottone-viola">
                     Aggiungi a My Library
                   </button>
                 )}
