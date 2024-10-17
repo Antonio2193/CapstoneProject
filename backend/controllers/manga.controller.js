@@ -32,9 +32,7 @@ export const getSingleManga = async(req,res) => {
 
 export const createManga = async (req, res) => {
     try {
-        console.log("req.body:", req.body); // Verifica i dati nel body
-        console.log("req.file:", req.file); // Verifica il file caricato
-
+        
         let coverPath;
 
         // Verifica se viene fornito un URL per l'immagine o se c'è un file caricato

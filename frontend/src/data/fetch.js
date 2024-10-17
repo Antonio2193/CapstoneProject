@@ -328,7 +328,6 @@ export const addMangaToLibrary = async (userId, mangaId) => {
         }
 
         const data = await response.json();
-        console.log(data);
         return data; // Ritorna i dati per la gestione successiva
     } catch (error) {
         console.error('Errore nell\'aggiungere il manga alla libreria:', error);

@@ -12,7 +12,6 @@ export default function UserContextProvider({ children }) {
     try {
       const meInfo = await me();
       setUserInfo(meInfo);
-      console.log(meInfo);
     } catch (error) {
       if (error.message === "401") {
         localStorage.removeItem("token");
@@ -26,7 +25,7 @@ export default function UserContextProvider({ children }) {
         try {
             const libraryData = await loadUserLibrary(userInfo._id);
             setMyLibrary(libraryData);
-            console.log("MyLibrary aggiornata con:", libraryData); // Verifica la risposta
+            console.log("MyLibrary aggiornata con:", libraryData);
         } catch (error) {
             console.error("Errore nel caricamento della libreria dell'utente:", error);
         }

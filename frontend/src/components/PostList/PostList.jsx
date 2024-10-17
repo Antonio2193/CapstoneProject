@@ -16,7 +16,6 @@ const PostList = () => {
 
   useEffect(() => {
     loadPosts(search, currentPage).then((data) => {
-      console.log(data);
       setPosts(data.dati);
       setTotalPages(data.totalPages);
     });

@@ -146,7 +146,6 @@ const PostItem = (props) => {
 
       if (response.ok) {
         const updatedPost = await response.json();
-        console.log("Post aggiornato con successo:", updatedPost);
         handleClose();
         setAggiornaPostList(!aggiornaPostList);
         handleShowPopup("Post aggiornato con successo!", "success");
