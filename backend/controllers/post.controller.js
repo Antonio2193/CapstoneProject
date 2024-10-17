@@ -16,6 +16,8 @@ export const getPosts = async (req, res) => {
             .populate('comments') // Popola anche i commenti
             .exec();
 
+            const totalResults = await Post.countDocuments(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {})
+            const totalPages = Math.ceil(totalResults / perPage);
         // Aggiungi lo stato del "like" per ogni post
         const postsWithLikes = posts.map(post => {
             return {
@@ -23,12 +25,11 @@ export const getPosts = async (req, res) => {
                 hasLiked: post.likes.userIds.includes(userId) // Aggiungi stato del like
             };
         });
-
         res.send({
             dati: postsWithLikes,
             page,
-            totalPages: Math.ceil(posts.length / perPage),
-            totalResults: posts.length
+            totalPages,
+            totalResults
         });
     } catch (error) {
         console.error('Error fetching posts:', error);

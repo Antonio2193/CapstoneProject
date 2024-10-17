@@ -82,8 +82,8 @@ const NavBar = (props) => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <div className="d-flex align-items-center ms-auto">
             {token && (<Link to="/library" className="navbar-link ms-3">Library</Link>)}
-            {token && (<Link to="/mylibrary" className="navbar-link ms-3">La Mia Libreria</Link>)}
-            {token && (<Link to="/search" className="navbar-link ms-3">Cerca Utenti</Link>)}
+            {token && (<Link to="/mylibrary" className="navbar-link ms-3">My Library</Link>)}
+            {token && (<Link to="/search" className="navbar-link ms-3">Search User</Link>)}
 
             {!token && (
               <Button className="ms-3 bottone-rosso" variant="secondary" onClick={handleShowReg}>

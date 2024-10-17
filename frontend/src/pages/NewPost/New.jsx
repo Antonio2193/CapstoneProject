@@ -70,7 +70,7 @@ const NewPost = (props) => {
           <Form.Label className="modale-colore">Cover</Form.Label>
           <Form.Control type="file" name="cover" onChange={handleChangeImage} className="bottone-bianco"/>
         </Form.Group>
-        <Form.Group controlId="blog-content" className="mt-3">
+        <Form.Group controlId="blog-content" className="mt-3 modale-colore">
           <Form.Label className="modale-colore">Contenuto Post</Form.Label>
           <Editor value={text} onChange={handleChange} className="new-blog-content" />
         </Form.Group>
